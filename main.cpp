@@ -8,6 +8,7 @@ using namespace std;
 
 
 int main (){
+    cout << "Lectura de la imagen" << endl;
     //Definir valores de la imagen a trabajar
     int width, height, channels;
     /*
