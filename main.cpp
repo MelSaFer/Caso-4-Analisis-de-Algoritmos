@@ -1,8 +1,19 @@
 //https://github.com/nothings/stb  --> link to the repositorie to download the stb libraries
-#include <iostream>
+/*
+Case 4
+Instituto tecnologico de Costa Rica
+Analisis de Algoritmos
+Students:
+        Melany Salas Fernandez
+        Moises Solano Espinoza
+*/
 
+//-------------------------------------Libraries------------------------------
+#include <iostream>
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+#include "Classes/Quadrant.h"
+#include "Classes/Pixel.h"
 
 using namespace std;
 
@@ -20,7 +31,7 @@ int main (){
 
     **Valor alpha: Hace referencia a la transparencia/opacidad de los valores de color de la imagen
     */
-    unsigned char *image = stbi_load("images/prueba.jpg", &width, &height, &channels,0);
+    unsigned char *image = stbi_load("images/rostro1.jpg", &width, &height, &channels,0);
     size_t imageSize = width*height*channels;
 
     cout<<"Width of the image: "<<width<<endl;
@@ -42,8 +53,13 @@ int main (){
           << static_cast<int>(image[index + 0]) << " "  //red value
           << static_cast<int>(image[index + 1]) << " "  //green value
           << static_cast<int>(image[index + 2]) << " "<<endl; //blue value
-
+		  
+	int prueba = image[index + 0];
     //Limpiar 
+
     stbi_image_free(image);
+
+	cout << "Creando ob" << endl;
+	
     return 0;
 }
