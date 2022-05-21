@@ -5,6 +5,8 @@
 #include <vector>
 #include "Pixel.h"
 
+#define TOTAL_PIXELS 1080
+
 using namespace std;
 
 //ClassCuadrant
@@ -16,9 +18,10 @@ class Quadrant{
         int maxY;
         int minX;
         int minY;
-        vector<Pixel*> pixelsInQuadrant; //Hay que revisar si tiene que ser puntero
-        //Color dominante
+        vector<Pixel*> pixelsInQuadrant; 
         int dominantRGBColor[3];
+        float probability;
+
     
     public:
 
@@ -54,9 +57,12 @@ class Quadrant{
             return minY;
         }
 
-        void addPixel(int pXCoord, int pYCoord){
-            Pixel* p = new Pixel();
-            pixelsInQuadrant.push_back(p);
+        void addPixel(int pXCoord, int pYCoord, int pRed, int pGreen, int pBlue){
+            Pixel* newPixel = new Pixel();
+            newPixel->setCoordinateX(pXCoord);
+            newPixel->setCoordinateY(pYCoord);
+            newPixel->setRGBColor(pRed, pGreen, pBlue);
+            pixelsInQuadrant.push_back(newPixel);
         }
 
         void setDominantRGBColor(int pRed, int pGreen, int pBlue){
@@ -71,6 +77,13 @@ class Quadrant{
 
 
 
+        void setProbability(){
+            probability = (100 * ((maxX - minX)*(maxY - minY))) / (TOTAL_PIXELS*TOTAL_PIXELS);
+        }
+
+        float getProbability(){
+            return probability;
+        }
 
 };
 
