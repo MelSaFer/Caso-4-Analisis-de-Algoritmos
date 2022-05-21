@@ -19,7 +19,7 @@ using namespace std;
 
 
 int main (){
-    cout << "Lectura de la imagen" << endl;
+    // cout << "Lectura de la imagen" << endl;
     //Definir valores de la imagen a trabajar
     int width, height, channels;
     /*
@@ -33,6 +33,10 @@ int main (){
     **Valor alpha: Hace referencia a la transparencia/opacidad de los valores de color de la imagen
     */
     unsigned char *image = stbi_load("images/rostro1.jpg", &width, &height, &channels,0);
+    if(image == NULL){
+        cout << "Error al abrir el archivo" << endl;
+        return 1;
+    }
     size_t imageSize = width*height*channels;
 
     cout<<"Width of the image: "<<width<<endl;
@@ -54,8 +58,10 @@ int main (){
           << static_cast<int>(image[index + 0]) << " "  //red value
           << static_cast<int>(image[index + 1]) << " "  //green value
           << static_cast<int>(image[index + 2]) << " "<<endl; //blue value
-		  
-	int prueba = image[index + 0];
+
+    int red = image[index + 0];
+    cout << "Red: " << red << endl;
+
     //Limpiar 
 
     stbi_image_free(image);
