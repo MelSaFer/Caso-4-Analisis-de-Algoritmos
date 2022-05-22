@@ -1,6 +1,8 @@
 #ifndef PIXEL
 #define PIXEL
 
+#include <iostream>
+
 using namespace std;
 
 //ClassCuadrant
@@ -18,7 +20,7 @@ class Pixel{
             coordinateX = pCoordinateX;
         }
 
-        int getCoordinateX(int pCoordinateX){
+        int getCoordinateX(){
             return coordinateX;
         }
 
@@ -26,8 +28,13 @@ class Pixel{
             coordinateY = pCoordinateY;
         }
 
-        int getCoordinateY(int pCoordinateY){
+        int getCoordinateY(){
             return coordinateY;
+        }
+
+        void setCoordinates(int pCoordinateX, int pCoordinateY){
+            coordinateX = pCoordinateX;
+            coordinateY = pCoordinateY;
         }
 
         void setRGBColor(int pRed, int pGreen, int pBlue){
@@ -38,6 +45,11 @@ class Pixel{
 
         int* getRGBColor(){
             return RGBColor;
+        }
+
+        void toString(){
+            cout << "\tX Coordinate: " << coordinateX \
+            << "\n\tY Coordinate: " << coordinateY << endl;
         }
 
 };

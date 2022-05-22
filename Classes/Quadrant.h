@@ -34,7 +34,7 @@ class Quadrant{
         }
 
         void setMinX(int pMinX){
-            maxX = pMinX;
+            minX = pMinX;
         }
 
         int getMinX(){
@@ -50,19 +50,15 @@ class Quadrant{
         }
 
         void setMinY(int pMinY){
-            maxY = pMinY;
+            minY = pMinY;
         }
 
         int getMinY(){
             return minY;
         }
 
-        void addPixel(int pXCoord, int pYCoord, int pRed, int pGreen, int pBlue){
-            Pixel* newPixel = new Pixel();
-            newPixel->setCoordinateX(pXCoord);
-            newPixel->setCoordinateY(pYCoord);
-            newPixel->setRGBColor(pRed, pGreen, pBlue);
-            pixelsInQuadrant.push_back(newPixel);
+        void addPixel(Pixel* pNewPixel){
+            pixelsInQuadrant.push_back(pNewPixel);
         }
 
         void setDominantRGBColor(int pRed, int pGreen, int pBlue){
@@ -79,10 +75,17 @@ class Quadrant{
 
         void setProbability(){
             probability = (100 * ((maxX - minX)*(maxY - minY))) / (TOTAL_PIXELS*TOTAL_PIXELS);
+            cout <<"Prob: " << probability << endl;
         }
 
         float getProbability(){
             return probability;
+        }
+
+        void toString(){
+            cout << "\n\tX Maximo: " << maxX << "\n\tX Minimo: " << minX << \
+                "\n\tY Maximo: " << maxY << "\n\tY Minimo: " << minY << \
+                "\n\t Probabilidad: " << probability << endl;
         }
 
 };

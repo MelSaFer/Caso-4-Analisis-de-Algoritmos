@@ -21,7 +21,7 @@ using namespace std;
 int main (){ 
 
     
-    Quadrant* q = new Quadrant();
+    //Quadrant* q = new Quadrant();
 
     //Values we are going to use for reading the image
     int width, height, channels;
@@ -39,10 +39,10 @@ int main (){
     int green = image[index + 1]; //green value
     int blue = image[index + 2]; //blue value
     //cout << red << " " << green << " " << blue << endl;
-    q->addPixel(xPosition, yPosition, red, green, blue);
+    //q->addPixel(xPosition, yPosition, red, green, blue);
 
     //Clean memory
-    delete q;
+    //delete q;
     stbi_image_free(image);
     return 0;
 }
