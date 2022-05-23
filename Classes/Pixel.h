@@ -48,6 +48,7 @@ class Pixel{
         }
 
         void toString(){
+            cout <<"----------------PIXEL----------------" <<endl;
             cout << "\tX Coordinate: " << coordinateX \
             << "\n\tY Coordinate: " << coordinateY << endl;
         }

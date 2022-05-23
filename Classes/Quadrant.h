@@ -83,9 +83,12 @@ class Quadrant{
         }
 
         void toString(){
-            cout << "\n\tX Maximo: " << maxX << "\n\tX Minimo: " << minX << \
-                "\n\tY Maximo: " << maxY << "\n\tY Minimo: " << minY << \
-                "\n\t Probabilidad: " << probability << endl;
+            cout << "\n\tX Max: " << maxX << "\n\tX Min: " << minX << \
+                "\n\tY Max: " << maxY << "\n\tY Min: " << minY << \
+                "\n\t Probability: " << probability << "\n\t Pixels in Quadrant: "<< endl;
+            for (int currentPixel = 0; currentPixel < pixelsInQuadrant.size(); currentPixel++){
+                pixelsInQuadrant.at(currentPixel)->toString();
+            } 
         }
 
 };

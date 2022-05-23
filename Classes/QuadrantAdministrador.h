@@ -21,26 +21,57 @@ class QuadrantAdmin{
         }
 
         void addQuadrant(Pixel* pNewPixel){
-            cout <<"\nEn lista hay: " <<  quadrantsInImage.size() << endl;
-
+            cout <<"\nEn lista hay: " <<  quadrantsInImage.size() << " cuadrantes" << endl;
+            //We analice the quadrants in the image to verify if the pixel is in one or if we have to create one
             for(int indexOfQuadrant = 0; indexOfQuadrant < quadrantsInImage.size(); indexOfQuadrant++){
-                //cout << "Cuadrante actual: ";
-                //quadrantsInImage.at(indexOfQuadrant)->toString();
-                
+                //if the pixel is in the quadrant
                 if( (quadrantsInImage.at(indexOfQuadrant)->getMaxX() > pNewPixel->getCoordinateX()) &&
                     (quadrantsInImage.at(indexOfQuadrant)->getMinX() < pNewPixel->getCoordinateX()) &&
                     (quadrantsInImage.at(indexOfQuadrant)->getMaxY() > pNewPixel->getCoordinateY()) && 
                     (quadrantsInImage.at(indexOfQuadrant)->getMinY() < pNewPixel->getCoordinateY())){
+                        cout << "Antes..." << endl;
+                        quadrantsInImage.at(indexOfQuadrant)->toString();
+
+                        //We add the new Pixel
                         quadrantsInImage.at(indexOfQuadrant)->addPixel(pNewPixel);
-                        //HAY QUE ACTUALIZAR LAS DIMENSIONES DEL CUADRANTE
+                        
                         //Se llama a la funcion para actualizar estadisticas, o no?
-                        cout << "El cuadrante ya existia\n" << "Se agrego el pixel en: " << endl;
+
+                        cout << "\nEl cuadrante ya existia\n" << "Se agrego el pixel: " << endl;
                         pNewPixel->toString();
+
+                        //Updating the dimentions of the quadrant
+                        int newMaxX = pNewPixel->getCoordinateX() + 20 ;
+                        int newMinX = pNewPixel->getCoordinateX() - 20 ;
+                        int newMaxY = pNewPixel->getCoordinateY() + 20 ;
+                        int newMinY = pNewPixel->getCoordinateY() - 20 ;
+
+                        if(newMaxX > quadrantsInImage.at(indexOfQuadrant)->getMaxX()){
+                            quadrantsInImage.at(indexOfQuadrant)->setMaxX(newMaxX);
+                        }
+
+                        if(newMinX < quadrantsInImage.at(indexOfQuadrant)->getMinX()){
+                            quadrantsInImage.at(indexOfQuadrant)->setMinX(newMinX);
+                        }
+
+                        if(newMaxY > quadrantsInImage.at(indexOfQuadrant)->getMaxY()){
+                            quadrantsInImage.at(indexOfQuadrant)->setMaxY(newMaxY);
+                        }
+
+                        if(newMinY < quadrantsInImage.at(indexOfQuadrant)->getMinY()){
+                            quadrantsInImage.at(indexOfQuadrant)->setMinY(newMinY);
+                        }
+                        
+                        cout << "Despues..." << endl;
+                        quadrantsInImage.at(indexOfQuadrant)->toString();
                         
                         return;
                     }
-            }     
+            }   
+
+            //We create a new quadrant for the pixel  
             Quadrant* newQuadrant = new Quadrant();
+            //Adds the pixel to the quadrant
             newQuadrant->addPixel(pNewPixel);
 
             newQuadrant->setMaxX(pNewPixel->getCoordinateX() + 20);
@@ -58,11 +89,6 @@ class QuadrantAdmin{
             
         }
         
-
-
-
-
-
 };
 
 

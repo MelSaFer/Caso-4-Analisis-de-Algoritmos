@@ -27,11 +27,13 @@ int main (){
     //Size of the image
     size_t imageSize = width*height*channels;
 
+    //Verify if the image exists
     if(image == NULL){
         cout << "Error al abrir el archivo" << endl;
         return 1;
     }
 
+    //We create the administrador of quiadrants
     QuadrantAdmin* theAdmin = new QuadrantAdmin();
 
     Pixel* p1 = new Pixel();
@@ -41,7 +43,7 @@ int main (){
     Pixel* p5 = new Pixel();
 
     p1->setCoordinates(20,20);
-    p2->setCoordinates(15,5);
+    p2->setCoordinates(39,39);
     p3->setCoordinates(200,14);
 
     theAdmin->addQuadrant(p1);
