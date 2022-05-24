@@ -16,6 +16,7 @@ Students:
 #include "Classes/Pixel.h"
 #include "Classes/QuadrantAdministrador.h"
 #include "Probabilistic.h"
+#include "Classes/Greys.h"
 
 using namespace std;
 
@@ -35,7 +36,17 @@ int main (){
         return 1;
     }
 
-    //We create the administrador of quiadrants
+    //Creates the grays in the range we defined
+    vector<Grey> greyInImage = greysInit();
+    
+    float p = RGBtoGreyScale(155, 255, 255);
+    classifyGrey(p, greyInImage);
+
+     for(int i = 0; i < 20; i++){
+         greyInImage.at(i).toString();
+     }
+
+    //We create the administrador of quadrants
     QuadrantAdmin* theAdmin = new QuadrantAdmin();
     Quadrant* newQuadrant = new Quadrant();
     newQuadrant->setBottomRandom(0);
