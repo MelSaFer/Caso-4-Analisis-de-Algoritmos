@@ -21,6 +21,8 @@ class Quadrant{
         vector<Pixel*> pixelsInQuadrant; 
         int dominantRGBColor[3];
         float probability;
+        float bottomRandom;
+        float topRandom;
 
     
     public:
@@ -61,6 +63,10 @@ class Quadrant{
             pixelsInQuadrant.push_back(pNewPixel);
         }
 
+        vector<Pixel*> getPixelsInQuadrant(){
+            return pixelsInQuadrant;
+        }
+
         void setDominantRGBColor(int pRed, int pGreen, int pBlue){
             dominantRGBColor[0] = pRed;
             dominantRGBColor[1] = pGreen;
@@ -82,10 +88,27 @@ class Quadrant{
             return probability;
         }
 
+        void setBottomRandom(float pBottom){
+            this->bottomRandom = pBottom;
+        }
+
+        float getBottomRandom(){
+            return this->bottomRandom;
+        }
+
+        void setTopRandom(float pTop){
+            this->topRandom = pTop;
+        }
+
+        float getTopRandom(){
+            return this->topRandom;
+        }
+
         void toString(){
             cout << "\n\tX Max: " << maxX << "\n\tX Min: " << minX << \
                 "\n\tY Max: " << maxY << "\n\tY Min: " << minY << \
-                "\n\t Probability: " << probability << "\n\t Pixels in Quadrant: "<< endl;
+                "\n\tBottomRandom:" << bottomRandom << "\n\tTopRandom:" << topRandom <<\
+                "\n\tProbability: " << probability << "\n\tPixels in Quadrant: "<< endl;
             for (int currentPixel = 0; currentPixel < pixelsInQuadrant.size(); currentPixel++){
                 pixelsInQuadrant.at(currentPixel)->toString();
             } 

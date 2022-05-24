@@ -15,6 +15,7 @@ Students:
 #include "Classes/Quadrant.h"
 #include "Classes/Pixel.h"
 #include "Classes/QuadrantAdministrador.h"
+#include "Probabilistic.h"
 
 using namespace std;
 
@@ -23,7 +24,8 @@ int main (){
     //Values we are going to use for reading the image
     int width, height, channels;
     //Image we are going to use
-    unsigned char *image = stbi_load("images/rostro1.jpg", &width, &height, &channels,0);
+    const char* filename = "images/rostro1.jpg";
+    unsigned char *image = stbi_load(filename, &width, &height, &channels,0);
     //Size of the image
     size_t imageSize = width*height*channels;
 
@@ -35,29 +37,50 @@ int main (){
 
     //We create the administrador of quiadrants
     QuadrantAdmin* theAdmin = new QuadrantAdmin();
+    Quadrant* newQuadrant = new Quadrant();
+    newQuadrant->setBottomRandom(0);
+    newQuadrant->setTopRandom(1);
+    newQuadrant->setMinX(0);
+    newQuadrant->setMinY(0);
+    newQuadrant->setMaxX(1080);
+    newQuadrant->setMaxY(1080);
+    newQuadrant->setProbability();
 
-    Pixel* p1 = new Pixel();
-    Pixel* p2 = new Pixel();
-    Pixel* p3 = new Pixel();
-    Pixel* p4 = new Pixel();
-    Pixel* p5 = new Pixel();
+    newQuadrant->toString();
 
-    p1->setCoordinates(20,20);
-    p2->setCoordinates(39,39);
-    p3->setCoordinates(200,14);
+    theAdmin->addQuadrant(newQuadrant);
 
-    theAdmin->addQuadrant(p1);
-    theAdmin->addQuadrant(p2);
-    theAdmin->addQuadrant(p3);
+    probabilisticFunction(image, *theAdmin);
+
+    long double prueba = 400.0/1166400.0;
+    cout << "Cantidad de cuadrantes despues del Prob: " << theAdmin->getQuadrantsInImage().size() << endl;
+    cout << (prueba) << endl;
+    // printf("%i", prueba);
 
 
 
-    cout <<"--------------------------------------" << endl;
-    cout <<"Lista" << endl;
-    for(int i = 0 ; i < theAdmin->getQuadrantsInImage().size(); i++){
-        cout <<"--------------------------------------" << endl; 
-        theAdmin->getQuadrantsInImage().at(i)->toString();
-    }
+    // Pixel* p1 = new Pixel();
+    // Pixel* p2 = new Pixel();
+    // Pixel* p3 = new Pixel();
+    // Pixel* p4 = new Pixel();
+    // Pixel* p5 = new Pixel();
+
+    // p1->setCoordinates(20,20);
+    // p2->setCoordinates(39,39);
+    // p3->setCoordinates(200,14);
+
+    // theAdmin->addQuadrant(p1);
+    // theAdmin->addQuadrant(p2);
+    // theAdmin->addQuadrant(p3);
+
+
+
+    // cout <<"--------------------------------------" << endl;
+    // cout <<"Lista" << endl;
+    // for(int i = 0 ; i < theAdmin->getQuadrantsInImage().size(); i++){
+    //     cout <<"--------------------------------------" << endl; 
+    //     theAdmin->getQuadrantsInImage().at(i)->toString();
+    // }
 
     
 
@@ -89,16 +112,16 @@ int main (){
 
     stbi_image_free(image);
 
-	cout << "Creando ob" << endl;
+	// cout << "Creando ob" << endl;
 	
 
     //Deletes
     delete theAdmin;
-    delete p1;
-    delete p2;
-    delete p3;
-    delete p4;
-    delete p5;
+    // delete p1;
+    // delete p2;
+    // delete p3;
+    // delete p4;
+    // delete p5;
 
     return 0;
 }

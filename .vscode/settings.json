@@ -1,5 +1,12 @@
 {
     "files.associations": {
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "quadrantadministrador.h": "c",
+        "pixel.h": "c",
+        "stb_image.h": "c",
+        "random": "cpp",
+        "ostream": "c",
+        "vector": "c",
+        "xiosbase": "cpp"
     }
 }
