@@ -4,6 +4,7 @@
 //------------------------------------LIBRARIES-------------------------------------
 #include <vector>
 #include "Pixel.h"
+#include "Greys.h"
 
 #define TOTAL_PIXELS 1080
 
@@ -20,6 +21,7 @@ class Quadrant{
         int minY;
         vector<Pixel*> pixelsInQuadrant; 
         int dominantRGBColor[3];
+        int greyScale;
         float probability;
         float bottomRandom;
         float topRandom;
@@ -77,7 +79,13 @@ class Quadrant{
             return dominantRGBColor;
         }
 
+        void setGreyScale(int pRed, int pGreen, int pBlue, vector<Grey> pGreyInImage){
+            float trueGrey = RGBtoGreyScale(pRed, pGreen, pBlue);            
+        }
 
+        int getGreyInScale(){
+            return greyScale;
+        }
 
         void setProbability(){
             probability = (100 * ((maxX - minX)*(maxY - minY))) / (TOTAL_PIXELS*TOTAL_PIXELS);

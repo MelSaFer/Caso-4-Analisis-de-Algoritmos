@@ -24,9 +24,11 @@ using namespace std;
 int main (){
     //Values we are going to use for reading the image
     int width, height, channels;
+
     //Image we are going to use
     const char* filename = "images/rostro1.jpg";
     unsigned char *image = stbi_load(filename, &width, &height, &channels,0);
+
     //Size of the image
     size_t imageSize = width*height*channels;
 
@@ -39,6 +41,7 @@ int main (){
     //Creates the grays in the range we defined
     vector<Grey> greyInImage = greysInit();
     
+    //Prueba de manejo de grises
     float p = RGBtoGreyScale(155, 255, 255);
     classifyGrey(p, greyInImage);
 
@@ -61,7 +64,7 @@ int main (){
 
     theAdmin->addQuadrant(newQuadrant);
 
-    probabilisticFunction(image, *theAdmin);
+    probabilisticFunction(image, *theAdmin, greyInImage);
 
     long double prueba = 400.0/1166400.0;
     cout << "Cantidad de cuadrantes despues del Prob: " << theAdmin->getQuadrantsInImage().size() << endl;

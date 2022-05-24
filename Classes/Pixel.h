@@ -2,6 +2,7 @@
 #define PIXEL
 
 #include <iostream>
+#include "Greys.h"
 
 using namespace std;
 
@@ -12,6 +13,7 @@ class Pixel{
         int coordinateX;
         int coordinateY;
         int RGBColor[3];
+        int greyColor;
         //RGB
 
     public:
@@ -45,6 +47,17 @@ class Pixel{
 
         int* getRGBColor(){
             return RGBColor;
+        }
+
+        void setGrey(int pRed, int pGreen, int pBlue, vector<Grey> pGreyInImage){
+            float trueGrey = RGBtoGreyScale(pRed, pGreen, pBlue);
+            this-> greyColor = classifyGrey(trueGrey, pGreyInImage);
+            cout << "El gris del pixel es: " << this->greyColor << endl;
+
+        }
+
+        int getGrey(){
+            return this->greyColor;
         }
 
         void toString(){

@@ -4,6 +4,7 @@
 // LIBRARIES
 #include <iostream>
 #include <random>
+#include "Classes/Greys.h"
 
 #ifndef STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
@@ -19,7 +20,7 @@ using namespace std;
 #define TOTAL_PIXELS_IMAGE 1166400
 #define SIDE_LENGHT 1080
 
-void probabilisticFunction (unsigned char* pImageFile, QuadrantAdmin &pProbabilityTable) {
+void probabilisticFunction (unsigned char* pImageFile, QuadrantAdmin &pProbabilityTable, vector<Grey> pGreyInImage) {
     
     float maxSamplingPixels = TOTAL_PIXELS_IMAGE * MAX_SAMPLING_PORCENTAGE;
     cout << "\nCantidad de pixeles [40p]: " << (float)maxSamplingPixels << endl;
@@ -40,7 +41,7 @@ void probabilisticFunction (unsigned char* pImageFile, QuadrantAdmin &pProbabili
         cout << f << ", " << z << endl;
         x += 10;
 
-        pProbabilityTable.addQuadrant(f, pImageFile);
+        pProbabilityTable.addQuadrant(f, pImageFile, pGreyInImage);
 
         
     }

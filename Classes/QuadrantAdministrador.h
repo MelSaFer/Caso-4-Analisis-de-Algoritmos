@@ -6,6 +6,8 @@
 #include "Quadrant.h"
 #include "Pixel.h"
 #include <random>
+#include "Greys.h"
+
 
 #define EXPAND_RANGE 20.0
 
@@ -38,7 +40,7 @@ class QuadrantAdmin{
             quadrantsInImage.insert(quadrantsInImage.begin(), pNewQuadrant);
         }
 
-        void addQuadrant(float pProbability, unsigned char* pImageFile){
+        void addQuadrant(float pProbability, unsigned char* pImageFile, vector<Grey> pGreyInImage){
             cout <<"\nEn lista hay: " <<  quadrantsInImage.size() << " cuadrantes" << endl;
             cout << "Elementos: " << quadrantsInImage.at(0)->getPixelsInQuadrant().size() << endl;
 
@@ -87,6 +89,8 @@ class QuadrantAdmin{
                         cout << "Colores: " << red << ", " << green << ", " << blue << endl;
 
                         newQuadrantPixel->setRGBColor(red,green,blue);
+                        newQuadrantPixel->setGrey(red, green, blue, pGreyInImage);
+
                         
                         // sacar ese punto, su color
                         

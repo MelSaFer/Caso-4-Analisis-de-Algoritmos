@@ -10,8 +10,6 @@ using namespace std;
 
 #define MAX_GRAY 20.0
 
-
-
 class Grey{
     private:
         int identificationId;
@@ -52,14 +50,6 @@ class Grey{
         }
         //---------------------------------------------------
 
-
-
-
-
-
-
-
-        //---------------------------------------------------
         void toString(){
             cout <<"------------------------------------------\n"<< "Id: " << this->identificationId \
             << "\nMin Value: " << this->minValue << "\nMax Value: " << this->maxValue << endl;
@@ -67,13 +57,13 @@ class Grey{
 
 };
 
+//FUN.
+
 float RGBtoGreyScale(int pRed, int pGreen, int pBlue){
     float greyValue = 0.299 * (pRed + 0.0) + 0.587 * (pGreen + 0.0) + 0.114 * (pBlue + 0.0);
     cout << "Grey value: " << greyValue << endl;
     return greyValue;
 }
-
-
 
 Grey generateGrey(float pNewMinValue, int pNewIdentification){
     float newMaxValue = pNewMinValue + (256.0/MAX_GRAY);
