@@ -10,8 +10,9 @@
 
 using namespace std;
 
-//ClassCuadrant
-
+//-------------------------------------CLASSES---------------------------------------
+//ClassQuadrant
+//Class for handling the quadrants in the samplimg
 class Quadrant{
     private:
         //Attributes

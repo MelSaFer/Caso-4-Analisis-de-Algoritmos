@@ -1,7 +1,7 @@
 #ifndef GREYS
 #define GREYS
 
-//LIBRARIES------------------------------------------------------
+//------------------------------------LIBRARIES-------------------------------------
 #include <iostream>
 #include <vector>
 
@@ -11,7 +11,7 @@ using namespace std;
 //Define the greys we are handling for traslating the RGB to greys
 #define MAX_GREY 20.0
 
-//CLASSES-----------------------------------------------------------------------------------------------------
+//-------------------------------------CLASSES---------------------------------------
 /*
 Class Grey 
 This class is use to handle the color in the image 
