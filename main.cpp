@@ -45,31 +45,53 @@ int main (){
     float p = RGBtoGreyScale(155, 255, 255);
     classifyGrey(p, greyInImage);
 
-     for(int i = 0; i < 20; i++){
-         greyInImage.at(i).toString();
-     }
+    //  for(int i = 0; i < 20; i++){
+    //      greyInImage.at(i).toString();
+    //  }
 
     //We create the administrador of quadrants
-    QuadrantAdmin* theAdmin = new QuadrantAdmin();
+    // QuadrantAdmin* theAdmin = new QuadrantAdmin();
+    vector<Quadrant*> probabilityTable;
     Quadrant* newQuadrant = new Quadrant();
     newQuadrant->setBottomRandom(0);
     newQuadrant->setTopRandom(1);
-    newQuadrant->setMinX(0);
+    newQuadrant->setMinX(240);
     newQuadrant->setMinY(0);
-    newQuadrant->setMaxX(1080);
+    newQuadrant->setMaxX(840);
     newQuadrant->setMaxY(1080);
     newQuadrant->setProbability();
 
     newQuadrant->toString();
 
-    theAdmin->addQuadrant(newQuadrant);
+    probabilityTable.push_back(newQuadrant);
 
-    probabilisticFunction(image, *theAdmin, greyInImage);
+    probabilisticFunction(image, probabilityTable, greyInImage);
+
+    for(int i = 0; i < probabilityTable.size(); i++){
+        probabilityTable.at(i)->toString();
+    }
 
     long double prueba = 400.0/1166400.0;
-    cout << "Cantidad de cuadrantes despues del Prob: " << theAdmin->getQuadrantsInImage().size() << endl;
+    // cout << "Cantidad de cuadrantes despues del Prob: " << theAdmin->getQuadrantsInImage().size() << endl;
     cout << (prueba) << endl;
     // printf("%i", prueba);
+
+    cout << "====================================================================================================" << endl;
+
+    // for (int i = 0; i < theAdmin->getQuadrantsInImage().size(); i++){
+    //     cout << "----------------------------" << endl;
+    //     cout << "Cuadrante: " << i << endl;
+    //     cout << "Area: " << theAdmin->getQuadrantsInImage().at(i)->getMinX() << ", " << theAdmin->getQuadrantsInImage().at(i)->getMinY();
+    //     cout << "/ " << theAdmin->getQuadrantsInImage().at(i)->getMaxX() << ", " << theAdmin->getQuadrantsInImage().at(i)->getMaxY() << endl;
+    //     cout << "Random min: " << theAdmin->getQuadrantsInImage().at(i)->getBottomRandom() << ", Random max: " << theAdmin->getQuadrantsInImage().at(i)->getTopRandom() << endl;
+    //     cout << "Puntos: " << endl;
+        
+
+    //     for (int j = 0; j < theAdmin->getQuadrantsInImage().at(i)->getPixelsInQuadrant().size(); j++){
+    //         cout << "\t" << theAdmin->getQuadrantsInImage().at(i)->getPixelsInQuadrant().at(j)->getCoordinateX();
+    //         cout << ", " << theAdmin->getQuadrantsInImage().at(i)->getPixelsInQuadrant().at(j)->getCoordinateY() << endl;
+    //     }
+    // }
 
 
 
@@ -130,7 +152,7 @@ int main (){
 	
 
     //Deletes
-    delete theAdmin;
+    // delete theAdmin;
     // delete p1;
     // delete p2;
     // delete p3;

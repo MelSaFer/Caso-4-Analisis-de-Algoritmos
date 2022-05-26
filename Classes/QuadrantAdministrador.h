@@ -36,33 +36,33 @@ class QuadrantAdmin{
             return quadrantsInImage;
         }
 
+        Quadrant* getQuadrant(int pIndexQuadrant){
+            return quadrantsInImage.at(pIndexQuadrant);
+        }
+
         void addQuadrant(Quadrant* pNewQuadrant){
             quadrantsInImage.insert(quadrantsInImage.begin(), pNewQuadrant);
         }
 
         void addQuadrant(float pProbability, unsigned char* pImageFile, vector<Grey> pGreyInImage){
-            cout <<"\nEn lista hay: " <<  quadrantsInImage.size() << " cuadrantes" << endl;
-            cout << "Elementos: " << quadrantsInImage.at(0)->getPixelsInQuadrant().size() << endl;
-
             random_device rd;
             default_random_engine eng(rd());
 
-            int quantityQuadrants = quadrantsInImage.size();
+            int quantityQuadrants = this->quadrantsInImage.size();
             int red, green, blue;
             const size_t RGB = 3;
             size_t index;
 
             for(int indexOfQuadrant = 0; indexOfQuadrant < quantityQuadrants; indexOfQuadrant++){
 
-                cout << "================" << endl;
-                cout << "Proba: " << pProbability << endl;
-                cout << "Bottom range: " << quadrantsInImage.at(indexOfQuadrant)->getBottomRandom() << endl;
-                cout << "Top range: " << quadrantsInImage.at(indexOfQuadrant)->getTopRandom() << endl;
-                cout << "================" << endl;
+                // cout << "================" << endl;
+                // cout << "Proba: " << pProbability << endl;
+                // cout << "Bottom range: " << quadrantsInImage.at(indexOfQuadrant)->getBottomRandom() << endl;
+                // cout << "Top range: " << quadrantsInImage.at(indexOfQuadrant)->getTopRandom() << endl;
+                // cout << "================" << endl;
 
                 // if the probability is between the range of the quadrant
                 if(pProbability >= quadrantsInImage.at(indexOfQuadrant)->getBottomRandom() && pProbability < quadrantsInImage.at(indexOfQuadrant)->getTopRandom()){
-
                     cout << "Index: " << indexOfQuadrant << ", " << quadrantsInImage.size()-1 << endl;
 
                     // if the probability doesn't match with anyone, the last is the case 1080 x 1080
@@ -76,6 +76,7 @@ class QuadrantAdmin{
                         uniform_real_distribution<> distr2(quadrantsInImage.at(indexOfQuadrant)->getMinY(), quadrantsInImage.at(indexOfQuadrant)->getMaxY()); // random range
 
                         // create the new pixel and asign the coordenates and the color
+                        this->pixelsQuantity++;
                         Pixel* newQuadrantPixel = new Pixel();
                         newQuadrantPixel->setCoordinateX(distr(eng));
                         newQuadrantPixel->setCoordinateY(distr2(eng));
@@ -90,21 +91,19 @@ class QuadrantAdmin{
 
                         newQuadrantPixel->setRGBColor(red,green,blue);
                         newQuadrantPixel->setGrey(red, green, blue, pGreyInImage);
-
                         
                         // sacar ese punto, su color
                         
-
                         // create the new quadrant
                         Quadrant* newQuadrant = new Quadrant();
                         newQuadrant->setBottomRandom(0);
                         newQuadrant->setTopRandom(1);
-                        newQuadrant->setMinX(newQuadrantPixel->getCoordinateX()-20);
-                        newQuadrant->setMinY(newQuadrantPixel->getCoordinateY()-20);
-                        newQuadrant->setMaxX(newQuadrantPixel->getCoordinateX()+20);
-                        newQuadrant->setMaxY(newQuadrantPixel->getCoordinateY()+20);
+                        newQuadrant->setMinX(newQuadrantPixel->getCoordinateX()-10);
+                        newQuadrant->setMinY(newQuadrantPixel->getCoordinateY()-10);
+                        newQuadrant->setMaxX(newQuadrantPixel->getCoordinateX()+10);
+                        newQuadrant->setMaxY(newQuadrantPixel->getCoordinateY()+10);
                         newQuadrant->setBottomRandom(0.0);
-                        newQuadrant->setTopRandom(0.0);
+                        newQuadrant->setTopRandom((EXPAND_RANGE * EXPAND_RANGE) / (1080.0*1080.0));
 
                         // newQuadrant->setBottomRandom(quadrantsInImage.at(indexOfQuadrant)->getBottomRandom());
                         // newQuadrant->setTopRandom(quadrantsInImage.at(indexOfQuadrant)->getBottomRandom() + ((EXPAND_RANGE*EXPAND_RANGE)/(1080.0*1080.0)));
@@ -125,6 +124,7 @@ class QuadrantAdmin{
                         uniform_real_distribution<> distr(quadrantsInImage.at(indexOfQuadrant)->getMinX(), quadrantsInImage.at(indexOfQuadrant)->getMaxX()); // random range
                         uniform_real_distribution<> distr2(quadrantsInImage.at(indexOfQuadrant)->getMinY(), quadrantsInImage.at(indexOfQuadrant)->getMaxY()); // random range
 
+                        this->pixelsQuantity++;
                         Pixel* newQuadrantPixel = new Pixel();
                         newQuadrantPixel->setCoordinateX(distr(eng));
                         newQuadrantPixel->setCoordinateY(distr2(eng));
@@ -165,107 +165,47 @@ class QuadrantAdmin{
                             quadrantsInImage.at(indexOfQuadrant)->setMinY(newMinY);
                             increase = true;
                         }
-                        
                         // sacar ese punto, su color
                         quadrantsInImage.at(indexOfQuadrant)->addPixel(newQuadrantPixel);
 
                         if(increase)
                             updateProbability(indexOfQuadrant);
-
                         return;
                     }
                 }
-
-                // //if the pixel is in the quadrant
-                // if( (quadrantsInImage.at(indexOfQuadrant)->getMaxX() > pNewPixel->getCoordinateX()) &&
-                //     (quadrantsInImage.at(indexOfQuadrant)->getMinX() < pNewPixel->getCoordinateX()) &&
-                //     (quadrantsInImage.at(indexOfQuadrant)->getMaxY() > pNewPixel->getCoordinateY()) && 
-                //     (quadrantsInImage.at(indexOfQuadrant)->getMinY() < pNewPixel->getCoordinateY())){
-                //         cout << "Antes..." << endl;
-                //         quadrantsInImage.at(indexOfQuadrant)->toString();
-
-                //         //We add the new Pixel
-                //         quadrantsInImage.at(indexOfQuadrant)->addPixel(pNewPixel);
-                        
-                //         //Se llama a la funcion para actualizar estadisticas, o no?
-
-                //         cout << "\nEl cuadrante ya existia\n" << "Se agrego el pixel: " << endl;
-                //         pNewPixel->toString();
-
-                //         //Updating the dimentions of the quadrant
-                //         int newMaxX = pNewPixel->getCoordinateX() + 20 ;
-                //         int newMinX = pNewPixel->getCoordinateX() - 20 ;
-                //         int newMaxY = pNewPixel->getCoordinateY() + 20 ;
-                //         int newMinY = pNewPixel->getCoordinateY() - 20 ;
-
-                //         if(newMaxX > quadrantsInImage.at(indexOfQuadrant)->getMaxX()){
-                //             quadrantsInImage.at(indexOfQuadrant)->setMaxX(newMaxX);
-                //         }
-
-                //         if(newMinX < quadrantsInImage.at(indexOfQuadrant)->getMinX()){
-                //             quadrantsInImage.at(indexOfQuadrant)->setMinX(newMinX);
-                //         }
-
-                //         if(newMaxY > quadrantsInImage.at(indexOfQuadrant)->getMaxY()){
-                //             quadrantsInImage.at(indexOfQuadrant)->setMaxY(newMaxY);
-                //         }
-
-                //         if(newMinY < quadrantsInImage.at(indexOfQuadrant)->getMinY()){
-                //             quadrantsInImage.at(indexOfQuadrant)->setMinY(newMinY);
-                //         }
-                        
-                //         cout << "Despues..." << endl;
-                //         quadrantsInImage.at(indexOfQuadrant)->toString();
-                        
-                //         return;
-                //     }
-            }   
-
-            // //We create a new quadrant for the pixel  
-            // Quadrant* newQuadrant = new Quadrant();
-            // //Adds the pixel to the quadrant
-            // newQuadrant->addPixel(pNewPixel);
-
-            // newQuadrant->setMaxX(pNewPixel->getCoordinateX() + 20);
-            // newQuadrant->setMinX(pNewPixel->getCoordinateX() - 20);
-
-            // newQuadrant->setMaxY(pNewPixel->getCoordinateY() + 20);
-            // newQuadrant->setMinY(pNewPixel->getCoordinateY() - 20);
-
-            // newQuadrant->setProbability();
-
-            // quadrantsInImage.insert(quadrantsInImage.begin(), newQuadrant);
-            // //Se llama a la funcion para actualizar estadisticas
-            // cout << "El cuadrante no existia, se creo uno\n" << "Se agrego el pixel en: " << endl;
-            // pNewPixel->toString();           
+            }           
         }
-
 
         void updateProbability (int pRowPosition){
 
-            float bottomRange, topRange;
-
-            int largo = this->quadrantsInImage.at(pRowPosition)->getMaxX() - this->quadrantsInImage.at(pRowPosition)->getMinX();
-            int alto = this->quadrantsInImage.at(pRowPosition)->getMaxY() - this->quadrantsInImage.at(pRowPosition)->getMinY();
+            float largo = getQuadrant(pRowPosition)->getMaxX() - getQuadrant(pRowPosition)->getMinX();
+            float alto = getQuadrant(pRowPosition)->getMaxY() - getQuadrant(pRowPosition)->getMinY();
 
             float porcentage = ((largo+0.0) * (alto+0.0)) / (1080.0*1080.0);
+            cout << (largo+0.0) * (alto+0.0) << endl;
             cout << "Largo: " << largo << ", Alto: " << alto << endl;
             cout << "Porcentage: -> " << porcentage << endl;
 
-            float diferencia = (this->quadrantsInImage.at(pRowPosition)->getBottomRandom() + porcentage) - this->quadrantsInImage.at(pRowPosition)->getTopRandom();
-            cout << "Diferencia: -> " << diferencia << endl;
+            float diferencia = (getQuadrant(pRowPosition)->getBottomRandom() + porcentage) - getQuadrant(pRowPosition)->getTopRandom();
+            // cout << "Diferencia: -> " << diferencia << endl;
 
-            // pRowPosition ++;
-            cout << "Row pos: " << pRowPosition << endl;
+            // getQuadrant(pRowPosition)->setBottomRandom(0.0);
+            // // this->quadrantsInImage.at(pRowPosition)->setBottomRandom(0.0);
+            float suma = getQuadrant(pRowPosition)->getBottomRandom() + porcentage;
+            // cout << "suma: " << suma << endl;
+            this->quadrantsInImage.at(pRowPosition)->setTopRandom(suma);
 
-            for(pRowPosition; pRowPosition < this->quadrantsInImage.size(); pRowPosition++){
+            pRowPosition ++;
+            // cout << "Row pos: " << pRowPosition << endl;
+
+            for(; pRowPosition < this->quadrantsInImage.size(); pRowPosition++){
                 if(pRowPosition != this->quadrantsInImage.size() - 1){
-                    this->quadrantsInImage.at(pRowPosition)->setBottomRandom(\
-                    this->quadrantsInImage.at(pRowPosition)->getBottomRandom() + diferencia
+                    this->quadrantsInImage[pRowPosition]->setBottomRandom(\
+                    this->quadrantsInImage[pRowPosition]->getBottomRandom() + diferencia
                     );
 
-                    this->quadrantsInImage.at(pRowPosition)->setTopRandom(\
-                    this->quadrantsInImage.at(pRowPosition)->getTopRandom() + diferencia
+                    this->quadrantsInImage[pRowPosition]->setTopRandom(\
+                    this->quadrantsInImage[pRowPosition]->getTopRandom() + diferencia
                     );
                 }
                 else{
@@ -277,20 +217,6 @@ class QuadrantAdmin{
         }
         
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

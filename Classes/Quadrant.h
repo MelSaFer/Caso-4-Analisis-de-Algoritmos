@@ -117,9 +117,9 @@ class Quadrant{
                 "\n\tY Max: " << maxY << "\n\tY Min: " << minY << \
                 "\n\tBottomRandom:" << bottomRandom << "\n\tTopRandom:" << topRandom <<\
                 "\n\tProbability: " << probability << "\n\tPixels in Quadrant: "<< endl;
-            for (int currentPixel = 0; currentPixel < pixelsInQuadrant.size(); currentPixel++){
-                pixelsInQuadrant.at(currentPixel)->toString();
-            } 
+            // for (int currentPixel = 0; currentPixel < pixelsInQuadrant.size(); currentPixel++){
+            //     pixelsInQuadrant.at(currentPixel)->toString();
+            // } 
         }
 
 };
