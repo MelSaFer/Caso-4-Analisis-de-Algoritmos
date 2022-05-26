@@ -1,23 +1,23 @@
 #ifndef PIXEL
 #define PIXEL
 
+//------------------------------------LIBRARIES-------------------------------------
 #include <iostream>
 #include "Greys.h"
 
 using namespace std;
 
-//ClassCuadrant
-
+//-------------------------------------CLASSES---------------------------------------
 class Pixel{
     private:
         int coordinateX;
         int coordinateY;
         int RGBColor[3];
         int greyColor;
-        //RGB
 
     public:
-
+        //---------------------------------------------------
+        //Sets and gets of the coordinates
         void setCoordinateX( int pCoordinateX){
             coordinateX = pCoordinateX;
         }
@@ -39,6 +39,8 @@ class Pixel{
             coordinateY = pCoordinateY;
         }
 
+        //---------------------------------------------------
+        //Sets and gets of the RGB color
         void setRGBColor(int pRed, int pGreen, int pBlue){
             RGBColor[0] = pRed;
             RGBColor[1] = pGreen;
@@ -49,6 +51,8 @@ class Pixel{
             return RGBColor;
         }
 
+        //---------------------------------------------------
+        //Set and get of the grey
         void setGrey(int pRed, int pGreen, int pBlue, vector<Grey> pGreyInImage){
             float trueGrey = RGBtoGreyScale(pRed, pGreen, pBlue);
             this-> greyColor = classifyGrey(trueGrey, pGreyInImage);
@@ -60,6 +64,8 @@ class Pixel{
             return this->greyColor;
         }
 
+        //---------------------------------------------------
+        //to string
         void toString(){
             cout <<"----------------PIXEL----------------" <<endl;
             cout << "\tX Coordinate: " << coordinateX \
