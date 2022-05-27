@@ -18,7 +18,7 @@ This class is use to handle the color in the image
  */
 class Grey{
     private:
-        int identificationId;   //This is for identify the greys (grey1, grey2, grey3...)
+        int identificationId;   //This is for identify the greys (grey1, grey2, grey3...) [1,20]
         float minValue;         //This are the values of the range
         float maxValue;
 

@@ -11,6 +11,10 @@
         "initializer_list": "cpp",
         "type_traits": "cpp",
         "xstring": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "greys.h": "c",
+        "unordered_map": "c",
+        "list": "c",
+        "xhash": "c"
     }
 }

@@ -87,6 +87,10 @@ class Quadrant{
         void setGreyScale(int pRed, int pGreen, int pBlue, vector<Grey> pGreyInImage){
             //float trueGrey = RGBtoGreyScale(pRed, pGreen, pBlue);            
         }
+        void setGreyScale(int pGray){
+            //float trueGrey = RGBtoGreyScale(pRed, pGreen, pBlue); 
+            this->greyScale = pGray;           
+        }
 
         int getGreyInScale(){
             return this->greyScale;
@@ -133,13 +137,20 @@ class Quadrant{
             return this->pixelsInQuadrant;
         }
 
+
+        void deletePixel(int pPixelIndex){
+            this->pixelsInQuadrant.erase(pixelsInQuadrant.begin() + pPixelIndex);
+        }
+
+        
+
         //---------------------------------------------------
         //to_string
         void toString(){
             cout << "\n\tX Max: " << maxX << "\n\tX Min: " << minX << \
                 "\n\tY Max: " << maxY << "\n\tY Min: " << minY << \
                 "\n\tBottomRandom:" << bottomRandom << "\n\tTopRandom:" << topRandom <<\
-                "\n\tProbability: " << probability << "\n\tPixels in Quadrant: "<< endl;
+                "\n\tProbability: " << probability << "\n\tPixels in Quadrant: "<< pixelsInQuadrant.size() << endl;
             // for (int currentPixel = 0; currentPixel < pixelsInQuadrant.size(); currentPixel++){
             //     pixelsInQuadrant.at(currentPixel)->toString();
             // } 
