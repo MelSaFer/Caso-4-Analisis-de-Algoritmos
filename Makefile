@@ -1,2 +1,5 @@
-prog: main.o
-	g++ main.o -o main -lws2_32
+CASO_4: main
+	g++ -o main main.o -lws2_32
+
+main: 
+	g++ -c main.cpp

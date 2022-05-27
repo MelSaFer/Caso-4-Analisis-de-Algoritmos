@@ -2,8 +2,12 @@
 #include <Ws2tcpip.h>
 #include <iostream>
 #include <stdlib.h>
+#include <winsock2.h>
+#ifdef _WIN32
 #include <Windows.h>
+#else
 #include <unistd.h>
+#endif
 
 
 #define IP_ADDRESS "192.168.100.58"
@@ -66,20 +70,3 @@ class socketclient {
 			closesocket(sock);
 		}
 };
-
-// int main(int argc, char const *argv[])
-// {
-
-//     socketclient client;
-
-//     client.init();
-
-//     client.clear();
-//     client.paintLine(100, 255, 176, 255, 100, 100, 250, 600);
-//     client.paintDot(200, 0, 15, 200, 500, 600, 15);
-//     client.paintDot(220, 150, 15, 200, 600, 600, 20);
-
-//     client.closeConnection();
-
-//     return 0;
-// }

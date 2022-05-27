@@ -11,9 +11,9 @@ class individual {
         // decide the size of your nibble for your problem
         float fitnessValue;
         unsigned char cromosoma;
-        int XCoordinate;
-        int YCoordinate;
-        int color;
+        //int XCoordinate;
+        //int YCoordinate;
+        //int color;
         
 
     public:
