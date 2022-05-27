@@ -68,8 +68,11 @@ int main (){
     probabilisticFunction(image, probabilityTable, greyInImage);
 
     for(int i = 0; i < probabilityTable.size(); i++){
-        probabilityTable.at(i)->toString();
+        // probabilityTable.at(i)->toString();
     }
+
+    cout << "===================================================" << endl;
+    cout << "Cantidad de cuadrantes: " << probabilityTable.size() << endl;
 
     long double prueba = 400.0/1166400.0;
     // cout << "Cantidad de cuadrantes despues del Prob: " << theAdmin->getQuadrantsInImage().size() << endl;

@@ -12,6 +12,13 @@
         "type_traits": "cpp",
         "xstring": "cpp",
         "xutility": "cpp",
+<<<<<<< HEAD
         "string": "cpp"
+=======
+        "greys.h": "c",
+        "unordered_map": "c",
+        "list": "c",
+        "xhash": "c"
+>>>>>>> Merge
     }
 }

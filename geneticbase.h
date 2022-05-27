@@ -1,8 +1,8 @@
 #ifndef _GENETICBASE_
 #define _GENETICBASE_ 1
 #include <vector>
-#include "lib/cromodistribution.h"
-#include "lib/individual.h"
+#include "Classes/cromodistribution.h"
+#include "Classes/individual.h"
 
 using namespace std;
 
