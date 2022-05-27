@@ -1,9 +1,10 @@
 #ifndef _INDIVIDUAL_
 #define _INDIVIDUAL_ 1
 
-#define CROMO_MAX_VALUE 32
+#define CROMO_MAX_VALUE 65535 // 
 #define NIBBLE_SIZE 16
-#define MIN_GENOTYPE_SIZE_BY_PARENT 2
+#define MIN_GENOTYPE_SIZE_BY_PARENT 2 // 5
+#include "point.h"
 
 class individual {
     private: 
@@ -11,6 +12,8 @@ class individual {
         // decide the size of your nibble for your problem
         float fitnessValue;
         unsigned char cromosoma;
+        point* pointInfo;
+
         //int XCoordinate;
         //int YCoordinate;
         //int color;
@@ -31,6 +34,14 @@ class individual {
 
         float getFitnessValue() {
             return this->fitnessValue;
+        }
+
+        void setPointInfo(point* pNewPoint){
+            this->pointInfo = pNewPoint;
+        }
+
+        point* getPointInfo(){
+            return this->pointInfo;
         }
 };
 

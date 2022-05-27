@@ -10,7 +10,7 @@
 #endif
 
 
-#define IP_ADDRESS "192.168.100.58"
+#define IP_ADDRESS "127.0.0.1"
 #define PORT 4000
 
 using namespace std;

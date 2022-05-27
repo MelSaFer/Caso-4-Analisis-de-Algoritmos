@@ -3,6 +3,7 @@
 #include <vector>
 #include "Classes/cromodistribution.h"
 #include "Classes/individual.h"
+// #include "socketWin.h"
 
 using namespace std;
 
@@ -14,6 +15,7 @@ class GeneticBase {
         vector<individual*> *unfitnessPopulation;
         int populationQuantity;
         int targetGenerations;
+        socketclient javaSocket;
 
 
         void evaluateFitness() {
@@ -94,11 +96,19 @@ class GeneticBase {
 
         void initPopulation(int pAmountOfIndividuals) {
             population->clear();
+
+            // javaSocket.init(); //  ver si nos sirve antes o despues del for
+
+            // javaSocket.paintLine(100, 255, 176, 255, 100, 100, 250, 600);
+            // javaSocket.paintDot(200, 0, 15, 200, 500, 600, 15);
+            // javaSocket.paintDot(220, 150, 15, 200, 600, 600, 20);
  
             for(int i=0; i<pAmountOfIndividuals; i++) {
                 individual* p = new individual((unsigned char) rand()%CROMO_MAX_VALUE);
                 population->push_back(p);
             }
+
+            // javaSocket.closeConnection();
         }
         
         void produceGenerations(int ptargetGenerations, int pChildrensPerGenerations) {

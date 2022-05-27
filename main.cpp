@@ -19,6 +19,9 @@ Students:
 #include "Classes/QuadrantAdministrador.h"
 #include "Probabilistic.h"
 #include "Classes/Greys.h"
+#include "Classes/cromodistribution.h"
+#include "geneticbase.h"
+#include <cmath>
 
 
 
@@ -69,6 +72,56 @@ int main(int argc, char const *argv[])
     probabilityTable.push_back(newQuadrant);
 
     probabilisticFunction(image, probabilityTable, greyInImage);
+
+    // ------------------------------------------------------------------------------
+    // GENETIC
+    // ------------------------------------------------------------------------------
+
+    GeneticBase genetic;
+
+    vector<cromodistribution*> geneticDistribution;
+
+    
+    srand(time(NULL));
+
+    int totalPoints = 0;
+
+    for(int probabiltyIndex = 0; probabiltyIndex < probabilityTable.size(); probabiltyIndex++){
+        totalPoints += probabilityTable.at(probabiltyIndex)->getPixelsInQuadrant().size();
+    }
+    cromodistribution* cromoRow;
+
+    cout << "Puntos totales: " << totalPoints << endl;
+    int lastValue = 0;
+
+    for(int tableIndex = 0; tableIndex < probabilityTable.size(); tableIndex++){
+        
+
+        cromoRow = new cromodistribution();
+        cromoRow->size = rand()%3;
+        cromoRow->shape = rand()%2;
+        cromoRow->totalPopulation = totalPoints;
+        cromoRow->quantityOfPixels = probabilityTable.at(tableIndex)->getPixelsInQuadrant().size();
+        cromoRow->probability = (cromoRow->quantityOfPixels + 0.0) / totalPoints;
+        cromoRow->minCromoValue = lastValue;
+        lastValue += round(65536 * cromoRow->probability);
+
+        if(tableIndex == (probabilityTable.size() - 1)){
+            cromoRow->maxCromoValue = 65536 - 1;
+        }
+        else
+            cromoRow->maxCromoValue = lastValue;
+
+        geneticDistribution.push_back(cromoRow);
+
+    } 
+
+    for (int i = 0; i < geneticDistribution.size(); i ++){
+        std :: cout << "Indice: " << i << ", size: " << geneticDistribution.at(i)->size << ", shape: " <<\
+        geneticDistribution.at(i)->shape << ", pixeles: " << geneticDistribution.at(i)->quantityOfPixels <<\
+        ", TPixeles: " << geneticDistribution.at(i)->totalPopulation << ", probability: " << \
+        float(geneticDistribution.at(i)->probability) << ", minValue: " << geneticDistribution.at(i)->minCromoValue << ", maxValue: " << geneticDistribution.at(i)->maxCromoValue << endl << endl;
+    }
 
 
 
