@@ -1,7 +1,7 @@
 #ifndef _INDIVIDUAL_
 #define _INDIVIDUAL_ 1
 
-#define CROMO_MAX_VALUE 65535 // 
+#define CROMO_MAX_VALUE 32 // 
 #define NIBBLE_SIZE 16
 #define MIN_GENOTYPE_SIZE_BY_PARENT 2 // 5
 #include "point.h"
