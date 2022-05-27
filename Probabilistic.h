@@ -175,7 +175,7 @@ void otherQuadrantCases (unsigned char* pImageFile, vector<Quadrant*> &pProbabil
             pProbabilityTable.at(indexTable)->setMinX(newMinY);
         }   
         increase = true;
-    }
+    } 
 
     if(newMaxY > pProbabilityTable.at(indexTable)->getMaxY()){
         if(newMaxY > 1080){

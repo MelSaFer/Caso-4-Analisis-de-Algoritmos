@@ -6,6 +6,7 @@
 #include "Pixel.h"
 #include "Greys.h"
 
+
 #define TOTAL_PIXELS 1080
 
 using namespace std;
