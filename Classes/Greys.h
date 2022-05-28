@@ -82,7 +82,7 @@ Ouput: The RGB converted to grey scale
 float RGBtoGreyScale(int pRed, int pGreen, int pBlue){
     //We use the formula for converting an RGB color to grey scale
     float greyValue = 0.299 * (pRed + 0.0) + 0.587 * (pGreen + 0.0) + 0.114 * (pBlue + 0.0);
-    cout << "Grey value: " << greyValue << endl;
+    // cout << "Grey value: " << greyValue << endl;
     return greyValue;
 }
 
@@ -105,7 +105,7 @@ Ouput: the identificator of the current grey
 int classifyGrey(float pAGrey, vector<Grey> scaleOfGreys){
     for (int currentGrey = 0; currentGrey < MAX_GREY ; currentGrey++){
         if( (scaleOfGreys.at(currentGrey).getMinValue() <= pAGrey) && (scaleOfGreys.at(currentGrey).getMaxValue() > pAGrey) ){
-            cout << "Es gris: " << scaleOfGreys.at(currentGrey).getIdentification() << endl;
+            // cout << "Es gris: " << scaleOfGreys.at(currentGrey).getIdentification() << endl;
             return scaleOfGreys.at(currentGrey).getIdentification();
         }
     }

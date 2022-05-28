@@ -56,7 +56,7 @@ class Pixel{
         void setGrey(int pRed, int pGreen, int pBlue, vector<Grey> pGreyInImage){
             float trueGrey = RGBtoGreyScale(pRed, pGreen, pBlue);
             this-> greyColor = classifyGrey(trueGrey, pGreyInImage);
-            cout << "El gris del pixel es: " << this->greyColor << endl;
+            // cout << "El gris del pixel es: " << this->greyColor << endl;
 
         }
 
