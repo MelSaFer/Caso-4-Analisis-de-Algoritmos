@@ -128,8 +128,8 @@ int main(int argc, char const *argv[])
     }
 
     int population = 300;
-    genetic.initPopulation(population, geneticDistribution);
-    genetic.produceGenerations(6, 400, geneticDistribution);
+    genetic.initPopulation(population, geneticDistribution, greyInImage);
+    genetic.produceGenerations(6, 400, geneticDistribution, greyInImage);
 
 
     return 0;

@@ -160,7 +160,7 @@ class GeneticBase {
             return selectedCromoDist;
         }
 
-        void paitingInJavaServer(individual* theIndividual){
+        void paitingInJavaServer(individual* theIndividual, vector<Grey> pScaleGreys){
             int size = (theIndividual->getSize()+1);
             int length;
             if(size == 0){
@@ -169,6 +169,16 @@ class GeneticBase {
                 length = MEDIUM;
             } else{
                 length = LARGE;
+            }
+
+            int grey = 0;
+
+            cout << "grey: " << theIndividual->getGray() << endl;
+
+            for(int indexGrey = 0; indexGrey < pScaleGreys.size(); indexGrey++){
+                if(theIndividual->getGray() == pScaleGreys.at(indexGrey).getIdentification()){
+                    grey = pScaleGreys.at(indexGrey).getMinValue();
+                }
             }
             //srand(time(NULL));
             //Evaluate if we are going to paint a circle or a line
@@ -183,9 +193,9 @@ class GeneticBase {
                 // cout<< "Direccion: " << direction << endl;
 
                 if(direction == 0){
-                    javaSocket.paintLine(10, 10, 10, 255, minCoordX, minCoordY, maxCoordX, maxCoordY);
+                    javaSocket.paintLine(grey, grey, grey, 255, minCoordX, minCoordY, maxCoordX, maxCoordY);
                 } else{
-                    javaSocket.paintLine(10, 10, 10, 255, minCoordX, maxCoordY, maxCoordX, minCoordY);
+                    javaSocket.paintLine(grey, grey, grey, 255, minCoordX, maxCoordY, maxCoordX, minCoordY);
                 }
 
                 
@@ -194,13 +204,13 @@ class GeneticBase {
                 int coordX = (theIndividual->getCoordX());
                 int coordY = (theIndividual->getCoordY());
                 //int radius = ((length/2)*size)/2;
-                javaSocket.paintDot(55, 55, 55, 200, coordX,coordY, size);
+                javaSocket.paintDot(grey, grey, grey, 200, coordX,coordY, size);
             }
             
 
         }
 
-        void initPopulation(int pAmountOfIndividuals, vector<cromodistribution*> pGeneticDistribution) {
+        void initPopulation(int pAmountOfIndividuals, vector<cromodistribution*> pGeneticDistribution, vector<Grey> pScaleGreys) {
             population->clear();
 
             //For the random of cromodist
@@ -230,6 +240,7 @@ class GeneticBase {
 
                 individual* newInd = new individual((short)currentDistribution, coordX, coordY, \
                             selectedCromoDist->shape, selectedCromoDist->size, selectedCromoDist);
+                newInd->setGray(selectedCromoDist->quadrant->getGreyInScale());
                 
                 this->population->push_back(newInd);
 
@@ -243,7 +254,7 @@ class GeneticBase {
                 // cout << "Shape: " << this->population->at(i)->getShape() << endl;
                 // cout << "Size: " << this->population->at(i)->getSize() << endl;
 
-                paitingInJavaServer(this->population->at(i));
+                paitingInJavaServer(this->population->at(i), pScaleGreys);
             }
             // javaSocket.closeConnection();
         }
@@ -278,6 +289,8 @@ class GeneticBase {
                 population->at(familyIndex)->setShape(selectedCromoDist->shape);
                 population->at(familyIndex)->setSize(selectedCromoDist->size);
                 population->at(familyIndex)->setChromoDist(selectedCromoDist);
+                population->at(familyIndex)->setGray(selectedCromoDist->quadrant->getGreyInScale());
+                
 
                 // individual* newInd = new individual((unsigned char) currentDistribution, coordX, coordY, \
                 //             selectedCromoDist->shape, selectedCromoDist->size, selectedCromoDist);
@@ -286,19 +299,17 @@ class GeneticBase {
             // this->population->push_back(newInd);
         }
         
-        void produceGenerations(int ptargetGenerations, int pChildrensPerGenerations, vector<cromodistribution*> pGeneticDistribution) {
+        void produceGenerations(int ptargetGenerations, int pChildrensPerGenerations, vector<cromodistribution*> pGeneticDistribution, vector<Grey> pScaleGreys) {
             for(int i=0; i<ptargetGenerations; i++) {
                 evaluateFitness();
                 reproduce(pChildrensPerGenerations);
                 chromosomesUpdate(pGeneticDistribution);
 
-                
                 javaSocket.clear();
 
                 for(int individualIndex = 0; individualIndex < this->population->size(); individualIndex++){
-                    paitingInJavaServer(this->population->at(individualIndex));
+                    paitingInJavaServer(this->population->at(individualIndex), pScaleGreys);
                 }
-
 
             }
 

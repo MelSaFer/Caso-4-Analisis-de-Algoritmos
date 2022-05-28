@@ -427,7 +427,7 @@ void probabilisticFunction (unsigned char* pImageFile, vector<Quadrant*> &pProba
     float randomNumber;
 
     // float num;
-    for(int i = 0; i < 100000; i++){ // while loop while 25% has not been sampled
+    for(int i = 0; i < 1000; i++){ // while loop while 25% has not been sampled
         randomNumber = distr(eng);
         // cout << "-------------" << endl;
         cout << randomNumber << ", " << i << endl;
