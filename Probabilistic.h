@@ -20,7 +20,7 @@ using namespace std;
 // Total pixels of the image 1080 * 1080
 #define TOTAL_PIXELS_IMAGE 648000 
 // The porcentage of the sampling (0-1)
-#define MAX_SAMPLING_PORCENTAGE 0.25
+#define MAX_SAMPLING_PORCENTAGE 0.40
 // The xMin - xMax distance
 #define SIDE_LENGHT 1080.0
 // The yMin - yMax distance
@@ -55,13 +55,8 @@ void updateProbability (vector<Quadrant*> &pProbabilityTable){
             // update de dimensions of the quadrant
             quadrantLenght = pProbabilityTable.at(pRowPosition)->getMaxX() - pProbabilityTable.at(pRowPosition)->getMinX();
             quadrantWidth = pProbabilityTable.at(pRowPosition)->getMaxY() - pProbabilityTable.at(pRowPosition)->getMinY();
-            // cout << pProbabilityTable.at(pRowPosition)->getMinX() << ", " << pProbabilityTable.at(pRowPosition)->getMaxX() << endl;
-            // cout << pProbabilityTable.at(pRowPosition)->getMinY() << ", " << pProbabilityTable.at(pRowPosition)->getMaxY() << endl;
-            // cout << "quadrantLenght: " << quadrantLenght << ", quadrantWidth: " << quadrantWidth << endl;
             quadrantArea = quadrantLenght * quadrantWidth; // calculate the area
-            // quadrantArea += pProbabilityTable.at(pRowPosition)->getPixelsInQuadrant().size();
 
-            // probability = (quadrantArea + 0.0) / (actualArea + pixelsQuantity + 0.0); // calculate the probability of the quadrant
             probability = (quadrantArea + 0.0) / (actualArea + 0.0);
 
             // assign the range of the random of the current quadrant
@@ -83,8 +78,8 @@ Function to add a new quadrant
 Entries: image data, the probability table, grays, index of the table
 */
 void totalAreaCase (unsigned char* pImageFile, vector<Quadrant*> &pProbabilityTable, vector<Grey> pGreyInImage, int indexTable){
-    cout << "===================================" << endl;
-    cout << "Funcion del area grande" << endl;
+    // cout << "===================================" << endl;
+    // cout << "Funcion del area grande" << endl;
 
     // Random process
     random_device rd;
@@ -97,7 +92,7 @@ void totalAreaCase (unsigned char* pImageFile, vector<Quadrant*> &pProbabilityTa
     int newCoordX = distr(eng);
     int newCoordY = distr2(eng);
 
-    cout << "Coordenadas random: " << newCoordX << ", " << newCoordY << endl;
+    // cout << "Coordenadas random: " << newCoordX << ", " << newCoordY << endl;
 
     // increase the generated pixels
     pixelsQuantity++;
@@ -118,7 +113,7 @@ void totalAreaCase (unsigned char* pImageFile, vector<Quadrant*> &pProbabilityTa
     green = pImageFile[index + 1];
     blue = pImageFile[index + 2];
 
-    cout << "Colores: " << red << ", " << green << ", " << blue << endl;
+    // cout << "Colores: " << red << ", " << green << ", " << blue << endl;
 
     newQuadrantPixel->setRGBColor(red,green,blue);
     newQuadrantPixel->setGrey(red, green, blue, pGreyInImage);
@@ -166,8 +161,8 @@ void totalAreaCase (unsigned char* pImageFile, vector<Quadrant*> &pProbabilityTa
     newQuadrant->setBottomRandom(0.0);
     newQuadrant->setTopRandom((quadrantArea + 0.0) / (actualArea + 0.0));
 
-    cout << "Bottom range: " << newQuadrant->getBottomRandom() << endl;
-    cout << "Top range: " << newQuadrant->getTopRandom() << endl;
+    // cout << "Bottom range: " << newQuadrant->getBottomRandom() << endl;
+    // cout << "Top range: " << newQuadrant->getTopRandom() << endl;
 
     // add the pixel to the new quadrant
     newQuadrant->addPixel(newQuadrantPixel);
@@ -175,9 +170,9 @@ void totalAreaCase (unsigned char* pImageFile, vector<Quadrant*> &pProbabilityTa
     // add the new quadrant
     pProbabilityTable.insert(pProbabilityTable.begin(), newQuadrant);
 
-    // update the probability of all quadrants
-    // if((pixelsQuantity % 11664) == 0)
-    //     updateProbability(pProbabilityTable);
+    // update the probability of all quadrants each 1%
+    if((pixelsQuantity % 11664) == 0)
+        updateProbability(pProbabilityTable);
 }
 
 /*___________________________________________________________________________________________________________
@@ -187,8 +182,8 @@ Function to update a quadrant
 Entries: image data, the probability table, grays, index of the table
 */
 void otherQuadrantCases (unsigned char* pImageFile, vector<Quadrant*> &pProbabilityTable, vector<Grey> pGreyInImage, int indexTable){
-    cout << "===================================" << endl;
-    cout << "Funcion de otras areas" << endl;
+    // cout << "===================================" << endl;
+    // cout << "Funcion de otras areas" << endl;
 
     // Random process
     random_device rd;
@@ -201,9 +196,9 @@ void otherQuadrantCases (unsigned char* pImageFile, vector<Quadrant*> &pProbabil
     int newCoordX = distr(eng);
     int newCoordY = distr2(eng);
 
-    cout << "Coordenadas del cuadrante: " << pProbabilityTable.at(indexTable)->getMinX() << ", " << pProbabilityTable.at(indexTable)->getMaxX() << \
-    ", " << pProbabilityTable.at(indexTable)->getMinY() << ", " << pProbabilityTable.at(indexTable)->getMaxY() << endl;
-    cout << "Coordenadas random: " << newCoordX << ", " << newCoordY << endl;
+    // cout << "Coordenadas del cuadrante: " << pProbabilityTable.at(indexTable)->getMinX() << ", " << pProbabilityTable.at(indexTable)->getMaxX() << \
+    // ", " << pProbabilityTable.at(indexTable)->getMinY() << ", " << pProbabilityTable.at(indexTable)->getMaxY() << endl;
+    // cout << "Coordenadas random: " << newCoordX << ", " << newCoordY << endl;
 
     // increase the generated pixels
     pixelsQuantity++;
@@ -224,7 +219,7 @@ void otherQuadrantCases (unsigned char* pImageFile, vector<Quadrant*> &pProbabil
     green = pImageFile[index + 1];
     blue = pImageFile[index + 2];
 
-    cout << "Colores: " << red << ", " << green << ", " << blue << endl;
+    // cout << "Colores: " << red << ", " << green << ", " << blue << endl;
 
     newQuadrantPixel->setRGBColor(red,green,blue);
     newQuadrantPixel->setGrey(red, green, blue, pGreyInImage);
@@ -243,7 +238,7 @@ void otherQuadrantCases (unsigned char* pImageFile, vector<Quadrant*> &pProbabil
     // if the area of the quadrant increased
     bool increase = false;
 
-    // we verify if the area of the quadrant exceeds the maximum
+    // we verify if the area of the quadrant exceeds the maximum (90 pixels)
     if(((pProbabilityTable.at(indexTable)->getMaxX() - pProbabilityTable.at(indexTable)->getMinX()) < 90)) { // max expand area is 90 pixels
 
         if(newMaxX > pProbabilityTable.at(indexTable)->getMaxX()){
@@ -297,108 +292,92 @@ void otherQuadrantCases (unsigned char* pImageFile, vector<Quadrant*> &pProbabil
 
     // calculate the difference of the areas
     int areaDifference = afterArea - beforeArea;
-    cout << "La diferencia del area es: " << areaDifference << endl;
+    // cout << "La diferencia del area es: " << areaDifference << endl;
 
     // update the total area
     actualArea += areaDifference;
   
-    cout << "Coordenadas del cuadrante: " << pProbabilityTable.at(indexTable)->getMinX() << ", " << pProbabilityTable.at(indexTable)->getMaxX() << \
-    ", " << pProbabilityTable.at(indexTable)->getMinY() << ", " << pProbabilityTable.at(indexTable)->getMaxY() << endl;
+    // cout << "Coordenadas del cuadrante: " << pProbabilityTable.at(indexTable)->getMinX() << ", " << pProbabilityTable.at(indexTable)->getMaxX() << \
+    // ", " << pProbabilityTable.at(indexTable)->getMinY() << ", " << pProbabilityTable.at(indexTable)->getMaxY() << endl;
 
     // add the pixel to the new quadrant
     pProbabilityTable.at(indexTable)->addPixel(newQuadrantPixel);
 
     // update the probability of all quadrants
-    // if(increase){
-    //     if((pixelsQuantity % 11664) == 0){
-    //         updateProbability(pProbabilityTable);
-    //     }
-    // }
-    // if((pixelsQuantity % 11664) == 0){
-    //     updateProbability(pProbabilityTable);
-    // }
+    if(increase)
+        updateProbability(pProbabilityTable);
+
+    if((pixelsQuantity % 11664) == 0){
+        updateProbability(pProbabilityTable);
+    }
 }
 
+// structure to calculate the dominant grays
 struct GrayColor {
     int type;
     int quantity;
 };
 
-// calculate the dominant of each area
+// calculate the dominant gray of each area
 void calculateDominantGray(Quadrant* &pQuadrant, vector<Grey> pGreyInImage){
     vector<GrayColor> grayDistr;
 
+    // fill vector with the posiible grays
     for (int grayIndex = 1; grayIndex < 21; grayIndex++ ){
         GrayColor gray;
         gray.type = grayIndex;
         gray.quantity = 0;
         grayDistr.push_back(gray);
     }
-    // cout << "=======================================================" << endl;
-    // cout << "La cantidad de grises son: " << grayDistr.size() << endl;
-    // cout << "La cantidad de pixeles son: " << pQuadrant->getPixelsInQuadrant().size() << endl;
+
     int typeGray;
+
     for(int pixelIndex = 0; pixelIndex < pQuadrant->getPixelsInQuadrant().size(); pixelIndex++){
         typeGray = pQuadrant->getPixelsInQuadrant().at(pixelIndex)->getGrey();
-        // cout << "Tipo de gris: " << pQuadrant->getPixelsInQuadrant().at(pixelIndex)->getGrey() << endl;
         grayDistr.at(typeGray-1).quantity ++;
     }
 
     int dominantGray = 0;
     int maxValue = 0;
+
     for(int vectorIndex = 0; vectorIndex < 20; vectorIndex ++){
         if(grayDistr.at(vectorIndex).quantity > maxValue){
             maxValue = grayDistr.at(vectorIndex).quantity;
             dominantGray = grayDistr.at(vectorIndex).type;
         }
     }
-    // cout << "Gris dominante: " << dominantGray << endl;
 
     pQuadrant->setGreyScale(dominantGray);
 
 }
 
-
+// delete the non dominant points
 void deletePixels (Quadrant* &pQuadrant){
     int dominantGray = pQuadrant->getGreyInScale();
-    // cout << "====================================" << endl;
-    // cout << "Largo antes: " << pQuadrant->getPixelsInQuadrant().size() << endl;
-    // cout << "color dominante: " <<  pQuadrant->getGreyInScale() << endl;
+
     for(int pixelIndex = 0; pixelIndex < pQuadrant->getPixelsInQuadrant().size(); pixelIndex++){
 
         if(pQuadrant->getPixelsInQuadrant().at(pixelIndex)->getGrey() != dominantGray){
-            // cout << "Not match: " << pQuadrant->getPixelsInQuadrant().at(pixelIndex)->getGrey() << endl;
             pQuadrant->deletePixel(pixelIndex);
-            // cout << "borrar" << endl;
             pixelIndex --;
-
         }
-
-        // typeGray = pQuadrant->getPixelsInQuadrant().at(pixelIndex)->getGrey();
-        // // cout << "Tipo de gris: " << pQuadrant->getPixelsInQuadrant().at(pixelIndex)->getGrey() << endl;
-        // grayDistr.at(typeGray-1).quantity ++;
     }
-
-    // cout << "Largo despues: " << pQuadrant->getPixelsInQuadrant().size() << endl;
-    // for(int pixelIndex = 0; pixelIndex < pQuadrant->getPixelsInQuadrant().size(); pixelIndex++){
-    //     cout << "Color: " << pQuadrant->getPixelsInQuadrant().at(pixelIndex)->getGrey() << endl;
-    // }
 }
 
+// compare the number of pixels of two quadrants
 bool sortByPixels(Quadrant* &pQuadrant1, Quadrant* &pQuadrant2){
     return pQuadrant1->getPixelsInQuadrant().size() > pQuadrant2->getPixelsInQuadrant().size();
 }
 
+// sort the table from most to least elements
 void sortTable(vector<Quadrant*> &pProbabilityTable){
     sort(pProbabilityTable.begin(), pProbabilityTable.end(), sortByPixels);
 }
 
+// the desired percentage of quadrants is selected
 void filterTable (vector<Quadrant*> &pProbabilityTable){
     int quadrantsQuantity = pProbabilityTable.size();
     int porcentageQuantity = abs(quadrantsQuantity * 0.4);
-
-    cout << "Cantidad total: " << quadrantsQuantity << endl;
-    cout << "Filtrada al 40p: " << porcentageQuantity << endl; 
 
     for(int tableIndex = porcentageQuantity; tableIndex < pProbabilityTable.size(); tableIndex++){
         pProbabilityTable.erase(pProbabilityTable.begin() + tableIndex);
@@ -418,29 +397,21 @@ void probabilisticFunction (unsigned char* pImageFile, vector<Quadrant*> &pProba
     random_device rd;
     default_random_engine eng(rd());
     uniform_real_distribution<> distr(0, 1); // random range
-    // srand(time(NULL));
-    // num = 0 + (float)(rand()) / ((float)(RAND_MAX/(1 - 0)));
-    
-    float maxSamplingPixels = TOTAL_PIXELS_IMAGE * MAX_SAMPLING_PORCENTAGE;
-    cout << "\nCantidad de pixeles [25p]: " << (float)maxSamplingPixels << endl;
     
     float randomNumber;
 
-    // float num;
-    for(int i = 0; i < 1000; i++){ // while loop while 25% has not been sampled
+    for(int i = 0; i < 233280; i++){ // while loop while 25% has not been sampled
         randomNumber = distr(eng);
-        // cout << "-------------" << endl;
-        cout << randomNumber << ", " << i << endl;
-        // cout << i << ", " << num << endl;   
 
         int size = pProbabilityTable.size();
+
         for(int tablePosition = 0; tablePosition < size; tablePosition++){
             if( (randomNumber >= pProbabilityTable.at(tablePosition)->getBottomRandom()) && (randomNumber < pProbabilityTable.at(tablePosition)->getTopRandom()) ){
-                if(tablePosition == pProbabilityTable.size() - 1){
+                if(tablePosition == pProbabilityTable.size() - 1){ // create a new quadrant
                     totalAreaCase(pImageFile, pProbabilityTable, pGreyInImage, tablePosition);
                 }
 
-                else{
+                else{ // update a quadrant
                     otherQuadrantCases(pImageFile, pProbabilityTable, pGreyInImage, tablePosition);
                 }
                 break;
@@ -449,26 +420,15 @@ void probabilisticFunction (unsigned char* pImageFile, vector<Quadrant*> &pProba
 
     }
 
+    // the dominant gray is calculated and those that do not have that color are eliminated
     for (int tableIndex = 0; tableIndex < pProbabilityTable.size(); tableIndex++){
         calculateDominantGray(pProbabilityTable.at(tableIndex), pGreyInImage);
         deletePixels(pProbabilityTable.at(tableIndex));
     }
 
-    // sortTable(pProbabilityTable);
-    // filterTable(pProbabilityTable);
-
-    
-    int cantidad = 0;
-    for (int tableIndex = 0; tableIndex < pProbabilityTable.size(); tableIndex++){
-        // cout << pProbabilityTable.at(tableIndex)->getPixelsInQuadrant().size() << ", ";
-        cantidad += pProbabilityTable.at(tableIndex)->getPixelsInQuadrant().size();
-    }
-
-    cout << "Cantidad de pixeles: " << cantidad << endl;
-
-    
-
-
+    // sort the table and filter
+    sortTable(pProbabilityTable);
+    filterTable(pProbabilityTable);
 }
 
 #endif

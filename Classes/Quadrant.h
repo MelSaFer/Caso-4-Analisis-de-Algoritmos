@@ -101,7 +101,7 @@ class Quadrant{
         //set and get of the probability of the quadrant
         void setProbability(){
             this->probability = (100 * ((maxX - minX)*(maxY - minY))) / (TOTAL_PIXELS*TOTAL_PIXELS);
-            cout <<"Prob: " << probability << endl;
+            // cout <<"Prob: " << probability << endl;
         }
 
         float getProbability(){
