@@ -3,7 +3,9 @@
 #include <vector>
 #include "Classes/cromodistribution.h"
 #include "Classes/individual.h"
-// #include "socketWin.h"
+//#include "Classes/point.h"
+
+int cromoMaxValue = 65535;
 
 using namespace std;
 
@@ -33,8 +35,26 @@ class GeneticBase {
             }
         }
 
-        float fitness(individual *pIndividual) {
-            return rand()%100;
+        int evaluateDistance( int pCoordX1, int pCoordY1, int pCoordX2, int pCoordY2){
+            //raiz((x2-x1)^2 + (y2-y1)^2)
+            int distance = sqrt(pow((pCoordX2-pCoordX1), 2) + pow((pCoordY2-pCoordY1), 2));
+
+            return distance;
+        }
+
+        int fitness(individual *pIndividual) {
+            //We use the "Fitness family" tecnique, the fitness value is assign acording tho te cuantity of
+            // neighbours
+            int distance;
+            int fitnessValue=0;
+            for(int currentIndividual = 0; currentIndividual < this->population->size(); currentIndividual){
+                
+                if(distance <= 15){//Evaluate if a pixel is a neighbours
+                    fitnessValue++;
+                } 
+            }
+
+            return fitnessValue;
         }
 
         void reproduce(int pAmountOfChildrens) {
@@ -43,10 +63,10 @@ class GeneticBase {
 
             for(int i=0; i<pAmountOfChildrens; i++) {
                 // select any two fitness parents
-                int parent_a_index = rand()%fitnessPopulation->size();
+                int parent_a_index = rand() % fitnessPopulation->size();
                 individual* parent_a = fitnessPopulation->at(parent_a_index);
 
-                int parent_b_index = rand()%fitnessPopulation->size();
+                int parent_b_index = rand() % fitnessPopulation->size();
                 individual* parent_b = fitnessPopulation->at(parent_b_index);
 
                 population->push_back(cross(parent_a, parent_b));
@@ -58,13 +78,13 @@ class GeneticBase {
 
             int cut_position = (rand() % (NIBBLE_SIZE-MIN_GENOTYPE_SIZE_BY_PARENT*2)) + MIN_GENOTYPE_SIZE_BY_PARENT;
 
-            unsigned char mask_a = CROMO_MAX_VALUE - 1; // 255 -> 11111111
+            unsigned char mask_a = cromoMaxValue - 1; // 255 -> 11111111
             mask_a <<= cut_position;
 
-            unsigned char mask_b = CROMO_MAX_VALUE - 1; // 255 -> 11111111
+            unsigned char mask_b = cromoMaxValue - 1; // 255 -> 11111111
             mask_b >>= NIBBLE_SIZE - cut_position;
 
-            unsigned char kid = (pParent_a->getCromosoma() & mask_a) | (pParent_b->getCromosoma() & mask_b);
+            unsigned char kid = (pParent_a->getChromosome() & mask_a) | (pParent_b->getChromosome() & mask_b);
 
             //----------Mutacion-----------
             if(rand() % (100)<7){
@@ -76,7 +96,7 @@ class GeneticBase {
                 kid= mask | (bit<<pos);
             }
             //-----------------------------
-            individual *children = new individual((pParent_a->getCromosoma() & mask_a) | (pParent_b->getCromosoma() & mask_b));
+            individual *children = new individual((pParent_a->getChromosome() & mask_a) | (pParent_b->getChromosome() & mask_b));
             return children;
         }
 
@@ -94,18 +114,51 @@ class GeneticBase {
             representation->push_back(pDistribution);
         }
 
-        void initPopulation(int pAmountOfIndividuals) {
+        cromodistribution* assignCromosomaticDist(int pCurrentDist, vector<cromodistribution*> pGeneticDistribution){
+            cromodistribution* selectedCromoDist = new cromodistribution();
+            for(int currentRow = 0; currentRow < pGeneticDistribution.size(); currentRow++){
+                if((pCurrentDist < pGeneticDistribution.at(currentRow)->maxCromoValue) && (pCurrentDist >= pGeneticDistribution.at(currentRow)->minCromoValue)){
+                    //cout << "Este es mi croma :" << pCurrentDist << "\nmin: " << pGeneticDistribution.at(currentRow)->minCromoValue\
+                    //<< " max: " << pGeneticDistribution.at(currentRow)->maxCromoValue << endl;
+                    selectedCromoDist = pGeneticDistribution.at(currentRow);
+                    break;
+                }
+            }
+            return selectedCromoDist;
+        }
+
+        void initPopulation(int pAmountOfIndividuals, vector<cromodistribution*> pGeneticDistribution) {
             population->clear();
+
+            //For the random of cromodist
+            random_device rd;
+            default_random_engine eng(rd());
+            uniform_real_distribution<> distr(0, cromoMaxValue); // random range
 
             // javaSocket.init(); //  ver si nos sirve antes o despues del for
 
             // javaSocket.paintLine(100, 255, 176, 255, 100, 100, 250, 600);
             // javaSocket.paintDot(200, 0, 15, 200, 500, 600, 15);
             // javaSocket.paintDot(220, 150, 15, 200, 600, 600, 20);
- 
-            for(int i=0; i<pAmountOfIndividuals; i++) {
-                individual* p = new individual((unsigned char) rand()%CROMO_MAX_VALUE);
-                population->push_back(p);
+
+            int currentDistribution;
+            int coordX;
+            int coordY;
+            for(int i=0; i < pAmountOfIndividuals; i++) {
+                currentDistribution = distr(eng);
+                cromodistribution* selectedCromoDist = new cromodistribution();
+                //cout << currentDistribution << endl;
+                selectedCromoDist = assignCromosomaticDist(currentDistribution, pGeneticDistribution);
+                //Random of the new point coord
+                uniform_real_distribution<> distrPointX(selectedCromoDist->quadrant->getMinX(), selectedCromoDist->quadrant->getMaxX()); 
+                uniform_real_distribution<> distrPointY(selectedCromoDist->quadrant->getMinY(), selectedCromoDist->quadrant->getMaxY()); 
+
+                individual* newInd = new individual((unsigned char) currentDistribution);
+
+                coordX = distrPointX(eng);
+                coordY = distrPointY(eng);
+                cromodistribution* newPixel = new cromodistribution(); 
+
             }
 
             // javaSocket.closeConnection();

@@ -123,20 +123,26 @@ int main(int argc, char const *argv[])
         float(geneticDistribution.at(i)->probability) << ", minValue: " << geneticDistribution.at(i)->minCromoValue << ", maxValue: " << geneticDistribution.at(i)->maxCromoValue << endl << endl;
     }
 
+    genetic.initPopulation(100, geneticDistribution);
+
+    
 
 
 
 
-    socketclient client;
 
-    client.init();
 
-    client.clear();
-    client.paintLine(100, 255, 176, 255, 100, 100, 250, 600);
-    client.paintDot(200, 0, 15, 200, 500, 600, 15);
-    client.paintDot(220, 150, 15, 200, 600, 600, 20);
 
-    client.closeConnection();
+    // socketclient client;
+
+    // client.init();
+
+    // client.clear();
+    // client.paintLine(100, 255, 176, 255, 100, 100, 250, 600);
+    // client.paintDot(200, 0, 15, 200, 500, 600, 15);
+    // client.paintDot(220, 150, 15, 200, 600, 600, 20);
+
+    // client.closeConnection();
 
     return 0;
 }

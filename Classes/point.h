@@ -6,8 +6,8 @@ class point {
     private: 
         int coordX;
         int coordY;
-        int yMin;
-        int yMax;
+        // int yMin;
+        // int yMax;
         int gray;
         int size;
         int shape;
