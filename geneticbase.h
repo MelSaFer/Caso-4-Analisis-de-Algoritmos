@@ -3,9 +3,12 @@
 #include <vector>
 #include "Classes/cromodistribution.h"
 #include "Classes/individual.h"
+#include <algorithm>
 //#include "Classes/point.h"
 
 int cromoMaxValue = 65535;
+
+#define MAXIMUM_DISTANCE 35
 
 using namespace std;
 
@@ -19,19 +22,44 @@ class GeneticBase {
         int targetGenerations;
         socketclient javaSocket;
 
-
         void evaluateFitness() {
+            cout << "Evaluate fitness" << endl;
             fitnessPopulation->clear();
             unfitnessPopulation->clear();
 
-            for(int i=0;i<population->size(); i++) {
+            for(int i=0;i < population->size(); i++) {
+                // cout << i <<  "''''''" << endl;
                population->at(i)->setFitnessValue(fitness(population->at(i)));
 
-                if (population->at(i)->getFitnessValue()>50) {  // fitness criteria of selection never will be an absolute value always is relative to the population
+                // if (population->at(i)->getFitnessValue()> 50) {  // fitness criteria of selection never will be an absolute value always is relative to the population
+                //     fitnessPopulation->push_back(population->at(i));
+                // } else {
+                //     unfitnessPopulation->push_back(population->at(i));
+                // }
+            }
+
+            // sort(population->begin(), population->end(), sortByFitness);
+
+            // // Empezamos copiando los taxistas en un vector
+            // std::vector<individual*> horas(population->size());
+            // std::copy(population->begin(), population->end(), horas.begin());
+
+            // Ordenamos
+            std::sort(population->begin(), population->end(),
+            [](auto &a, auto &b){ return a->getFitnessValue() > b->getFitnessValue(); });
+
+            int importantPixels = (int)(population->size() * 0.6);
+            for(int i = 0; i < population->size(); i++){
+                if(i < importantPixels){
                     fitnessPopulation->push_back(population->at(i));
-                } else {
+                }
+                else{
                     unfitnessPopulation->push_back(population->at(i));
                 }
+            }
+
+            for(int i = 0; i < this->fitnessPopulation->size(); i++){
+                cout << "Valor fit: " << this->fitnessPopulation->at(i)->getFitnessValue() << endl;
             }
         }
 
@@ -47,9 +75,10 @@ class GeneticBase {
             // neighbours
             int distance;
             int fitnessValue=0;
-            for(int currentIndividual = 0; currentIndividual < this->population->size(); currentIndividual){
-                
-                if(distance <= 15){//Evaluate if a pixel is a neighbours
+            for(int currentIndividual = 0; currentIndividual < this->population->size(); currentIndividual++){
+                // cout << "fitness" << endl;
+                distance = evaluateDistance(pIndividual->getCoordX(), pIndividual->getCoordY(), this->population->at(currentIndividual)->getCoordX(), this->population->at(currentIndividual)->getCoordY());
+                if(distance <= MAXIMUM_DISTANCE){//Evaluate if a pixel is a neighbour
                     fitnessValue++;
                 } 
             }
@@ -121,7 +150,7 @@ class GeneticBase {
                     //cout << "Este es mi croma :" << pCurrentDist << "\nmin: " << pGeneticDistribution.at(currentRow)->minCromoValue\
                     //<< " max: " << pGeneticDistribution.at(currentRow)->maxCromoValue << endl;
                     selectedCromoDist = pGeneticDistribution.at(currentRow);
-                    break;
+                    return selectedCromoDist;
                 }
             }
             return selectedCromoDist;
@@ -144,7 +173,10 @@ class GeneticBase {
             int currentDistribution;
             int coordX;
             int coordY;
-            for(int i=0; i < pAmountOfIndividuals; i++) {
+            cout << "AQUIII2-------------------------" <<endl;
+
+            for(int i = 0; i < pAmountOfIndividuals; i++) {
+                cout << "Creando individuo " << i << endl;
                 currentDistribution = distr(eng);
                 cromodistribution* selectedCromoDist = new cromodistribution();
                 //cout << currentDistribution << endl;
@@ -153,14 +185,25 @@ class GeneticBase {
                 uniform_real_distribution<> distrPointX(selectedCromoDist->quadrant->getMinX(), selectedCromoDist->quadrant->getMaxX()); 
                 uniform_real_distribution<> distrPointY(selectedCromoDist->quadrant->getMinY(), selectedCromoDist->quadrant->getMaxY()); 
 
-                individual* newInd = new individual((unsigned char) currentDistribution);
-
                 coordX = distrPointX(eng);
                 coordY = distrPointY(eng);
-                cromodistribution* newPixel = new cromodistribution(); 
+
+                individual* newInd = new individual((unsigned char) currentDistribution, coordX, coordY, \
+                            selectedCromoDist->shape, selectedCromoDist->size, selectedCromoDist);
+                
+                this->population->push_back(newInd);
 
             }
-
+            cout << "AQUIII-------------------------" <<endl;
+            for(int i = 0; i < this->population->size(); i++){
+                cout << "Individuo # " << i << endl;
+                // cout << "Cromo: " << this->population->at(i)->getChromosome() << endl;
+                cout << "X: " << this->population->at(i)->getCoordX() << endl;
+                cout << "Y: " << this->population->at(i)->getCoordY() << endl;
+                cout << "Gray: " << this->population->at(i)->getGray()<< endl;
+                cout << "Shape: " << this->population->at(i)->getShape() << endl;
+                cout << "Size: " << this->population->at(i)->getSize() << endl;
+            }
             // javaSocket.closeConnection();
         }
         

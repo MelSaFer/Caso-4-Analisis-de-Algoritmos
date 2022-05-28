@@ -22,6 +22,7 @@ Students:
 #include "Classes/cromodistribution.h"
 #include "geneticbase.h"
 #include <cmath>
+#include <algorithm>
 
 
 
@@ -105,6 +106,7 @@ int main(int argc, char const *argv[])
         cromoRow->probability = (cromoRow->quantityOfPixels + 0.0) / totalPoints;
         cromoRow->minCromoValue = lastValue;
         lastValue += round(65536 * cromoRow->probability);
+        cromoRow->quadrant = probabilityTable.at(tableIndex);
 
         if(tableIndex == (probabilityTable.size() - 1)){
             cromoRow->maxCromoValue = 65536 - 1;
@@ -116,33 +118,17 @@ int main(int argc, char const *argv[])
 
     } 
 
-    for (int i = 0; i < geneticDistribution.size(); i ++){
-        std :: cout << "Indice: " << i << ", size: " << geneticDistribution.at(i)->size << ", shape: " <<\
-        geneticDistribution.at(i)->shape << ", pixeles: " << geneticDistribution.at(i)->quantityOfPixels <<\
-        ", TPixeles: " << geneticDistribution.at(i)->totalPopulation << ", probability: " << \
-        float(geneticDistribution.at(i)->probability) << ", minValue: " << geneticDistribution.at(i)->minCromoValue << ", maxValue: " << geneticDistribution.at(i)->maxCromoValue << endl << endl;
-    }
+    // for (int i = 0; i < geneticDistribution.size(); i ++){
+    //     std :: cout << "Indice: " << i << ", size: " << geneticDistribution.at(i)->size << ", shape: " <<\
+    //     geneticDistribution.at(i)->shape << ", pixeles: " << geneticDistribution.at(i)->quantityOfPixels <<\
+    //     ", TPixeles: " << geneticDistribution.at(i)->totalPopulation << ", probability: " << \
+    //     float(geneticDistribution.at(i)->probability) << ", minValue: " << geneticDistribution.at(i)->minCromoValue << ", maxValue: " << geneticDistribution.at(i)->maxCromoValue << endl << endl;
+    // }
 
-    genetic.initPopulation(100, geneticDistribution);
+    int population = 100;
+    genetic.initPopulation(population, geneticDistribution);
+    genetic.produceGenerations(1, 40);
 
-    
-
-
-
-
-
-
-
-    // socketclient client;
-
-    // client.init();
-
-    // client.clear();
-    // client.paintLine(100, 255, 176, 255, 100, 100, 250, 600);
-    // client.paintDot(200, 0, 15, 200, 500, 600, 15);
-    // client.paintDot(220, 150, 15, 200, 600, 600, 20);
-
-    // client.closeConnection();
 
     return 0;
 }

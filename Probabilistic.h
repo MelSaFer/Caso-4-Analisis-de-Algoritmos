@@ -59,9 +59,10 @@ void updateProbability (vector<Quadrant*> &pProbabilityTable){
             // cout << pProbabilityTable.at(pRowPosition)->getMinY() << ", " << pProbabilityTable.at(pRowPosition)->getMaxY() << endl;
             // cout << "quadrantLenght: " << quadrantLenght << ", quadrantWidth: " << quadrantWidth << endl;
             quadrantArea = quadrantLenght * quadrantWidth; // calculate the area
-            quadrantArea += pProbabilityTable.at(pRowPosition)->getPixelsInQuadrant().size();
+            // quadrantArea += pProbabilityTable.at(pRowPosition)->getPixelsInQuadrant().size();
 
-            probability = (quadrantArea + 0.0) / (actualArea + pixelsQuantity + 0.0); // calculate the probability of the quadrant
+            // probability = (quadrantArea + 0.0) / (actualArea + pixelsQuantity + 0.0); // calculate the probability of the quadrant
+            probability = (quadrantArea + 0.0) / (actualArea + 0.0);
 
             // assign the range of the random of the current quadrant
             pProbabilityTable.at(pRowPosition)->setBottomRandom(lastPorcentage); 
@@ -419,7 +420,7 @@ void probabilisticFunction (unsigned char* pImageFile, vector<Quadrant*> &pProba
     float randomNumber;
 
     // float num;
-    for(int i = 0; i < 1000; i++){ // while loop while 25% has not been sampled
+    for(int i = 0; i < 100000; i++){ // while loop while 25% has not been sampled
         randomNumber = distr(eng);
         // cout << "-------------" << endl;
         cout << randomNumber << ", " << i << endl;
