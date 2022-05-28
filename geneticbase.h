@@ -120,7 +120,7 @@ class GeneticBase {
             unsigned char kid = (pParent_a->getChromosome() & mask_a) | (pParent_b->getChromosome() & mask_b);
 
             //----------Mutacion-----------
-            if(rand() % (100)<7){
+            if(rand() % (100) < 7){
                 unsigned short pos = rand() % (NIBBLE_SIZE);
                 unsigned short bit = (kid>>pos);
                 bit = (bit & 1)^1;
@@ -202,11 +202,12 @@ class GeneticBase {
 
         void initPopulation(int pAmountOfIndividuals, vector<cromodistribution*> pGeneticDistribution) {
             population->clear();
+            cout << "Tamano de population: " << population->size();
 
             //For the random of cromodist
             random_device rd;
             default_random_engine eng(rd());
-            uniform_real_distribution<> distr(0, cromoMaxValue); // random range
+            uniform_real_distribution<> distr(0, cromoMaxValue + 1); // random range
 
             javaSocket.init(); //  ver si nos sirve antes o despues del for
             javaSocket.clear();
@@ -222,8 +223,8 @@ class GeneticBase {
                 //cout << currentDistribution << endl;
                 selectedCromoDist = assignCromosomaticDist(currentDistribution, pGeneticDistribution);
                 //Random of the new point coord
-                uniform_real_distribution<> distrPointX(selectedCromoDist->quadrant->getMinX(), selectedCromoDist->quadrant->getMaxX()); 
-                uniform_real_distribution<> distrPointY(selectedCromoDist->quadrant->getMinY(), selectedCromoDist->quadrant->getMaxY()); 
+                uniform_real_distribution<> distrPointX(selectedCromoDist->quadrant->getMinX(), selectedCromoDist->quadrant->getMaxX() + 1); 
+                uniform_real_distribution<> distrPointY(selectedCromoDist->quadrant->getMinY(), selectedCromoDist->quadrant->getMaxY() + 1); 
 
                 coordX = distrPointX(eng);
                 coordY = distrPointY(eng);
@@ -252,7 +253,7 @@ class GeneticBase {
             //For the random of cromodist
             random_device rd;
             default_random_engine eng(rd());
-            uniform_real_distribution<> distr(0, cromoMaxValue); // random range
+            uniform_real_distribution<> distr(0, cromoMaxValue + 1); // random range
             short currentDistribution;
             int coordX;
             int coordY;
@@ -267,8 +268,8 @@ class GeneticBase {
                 //cout << currentDistribution << endl;
                 selectedCromoDist = assignCromosomaticDist(currentDistribution, pGeneticDistribution);
                 //Random of the new point coord
-                uniform_real_distribution<> distrPointX(selectedCromoDist->quadrant->getMinX(), selectedCromoDist->quadrant->getMaxX()); 
-                uniform_real_distribution<> distrPointY(selectedCromoDist->quadrant->getMinY(), selectedCromoDist->quadrant->getMaxY()); 
+                uniform_real_distribution<> distrPointX(selectedCromoDist->quadrant->getMinX(), selectedCromoDist->quadrant->getMaxX() + 1); 
+                uniform_real_distribution<> distrPointY(selectedCromoDist->quadrant->getMinY(), selectedCromoDist->quadrant->getMaxY() + 1); 
 
                 coordX = distrPointX(eng);
                 coordY = distrPointY(eng);

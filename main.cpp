@@ -33,7 +33,7 @@ int main(int argc, char const *argv[])
     int width, height, channels;
 
     //Image we are going to use
-    const char* filename = "images/rostro1.jpg";
+    const char* filename = "images/rostro3.jpg";
     unsigned char *image = stbi_load(filename, &width, &height, &channels,0);
 
     //Size of the image
@@ -127,9 +127,9 @@ int main(int argc, char const *argv[])
         float(geneticDistribution.at(i)->probability) << ", minValue: " << geneticDistribution.at(i)->minCromoValue << ", maxValue: " << geneticDistribution.at(i)->maxCromoValue << endl << endl;
     }
 
-    int population = 300;
+    int population = 150;
     genetic.initPopulation(population, geneticDistribution);
-    genetic.produceGenerations(6, 400, geneticDistribution);
+    genetic.produceGenerations(6, 100, geneticDistribution);
 
 
     return 0;

@@ -3,7 +3,7 @@
 
 //#define CROMO_MAX_VALUE 1 // 
 #define NIBBLE_SIZE 16
-#define MIN_GENOTYPE_SIZE_BY_PARENT 4 // 5
+#define MIN_GENOTYPE_SIZE_BY_PARENT 2 // 5
 #include "point.h"
 #include "Quadrant.h"
 #include "cromodistribution.h"

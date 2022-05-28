@@ -20,7 +20,7 @@ using namespace std;
 // Total pixels of the image 1080 * 1080
 #define TOTAL_PIXELS_IMAGE 648000 
 // The porcentage of the sampling (0-1)
-#define MAX_SAMPLING_PORCENTAGE 0.25
+#define MAX_SAMPLING_PORCENTAGE 0.40
 // The xMin - xMax distance
 #define SIDE_LENGHT 1080.0
 // The yMin - yMax distance
@@ -176,8 +176,8 @@ void totalAreaCase (unsigned char* pImageFile, vector<Quadrant*> &pProbabilityTa
     pProbabilityTable.insert(pProbabilityTable.begin(), newQuadrant);
 
     // update the probability of all quadrants
-    // if((pixelsQuantity % 11664) == 0)
-    //     updateProbability(pProbabilityTable);
+    if((pixelsQuantity % 11664) == 0)
+        updateProbability(pProbabilityTable);
 }
 
 /*___________________________________________________________________________________________________________
@@ -309,14 +309,12 @@ void otherQuadrantCases (unsigned char* pImageFile, vector<Quadrant*> &pProbabil
     pProbabilityTable.at(indexTable)->addPixel(newQuadrantPixel);
 
     // update the probability of all quadrants
-    // if(increase){
-    //     if((pixelsQuantity % 11664) == 0){
-    //         updateProbability(pProbabilityTable);
-    //     }
-    // }
-    // if((pixelsQuantity % 11664) == 0){
-    //     updateProbability(pProbabilityTable);
-    // }
+    if(increase)
+        updateProbability(pProbabilityTable);
+
+    if((pixelsQuantity % 11664) == 0){
+        updateProbability(pProbabilityTable);
+    }
 }
 
 struct GrayColor {
@@ -395,7 +393,7 @@ void sortTable(vector<Quadrant*> &pProbabilityTable){
 
 void filterTable (vector<Quadrant*> &pProbabilityTable){
     int quadrantsQuantity = pProbabilityTable.size();
-    int porcentageQuantity = abs(quadrantsQuantity * 0.4);
+    int porcentageQuantity = abs(quadrantsQuantity * 0.6);
 
     cout << "Cantidad total: " << quadrantsQuantity << endl;
     cout << "Filtrada al 40p: " << porcentageQuantity << endl; 
@@ -427,7 +425,7 @@ void probabilisticFunction (unsigned char* pImageFile, vector<Quadrant*> &pProba
     float randomNumber;
 
     // float num;
-    for(int i = 0; i < 100000; i++){ // while loop while 25% has not been sampled
+    for(int i = 0; i < 400000; i++){ // while loop while 25% has not been sampled
         randomNumber = distr(eng);
         // cout << "-------------" << endl;
         cout << randomNumber << ", " << i << endl;
@@ -449,13 +447,17 @@ void probabilisticFunction (unsigned char* pImageFile, vector<Quadrant*> &pProba
 
     }
 
+    
+
     for (int tableIndex = 0; tableIndex < pProbabilityTable.size(); tableIndex++){
         calculateDominantGray(pProbabilityTable.at(tableIndex), pGreyInImage);
         deletePixels(pProbabilityTable.at(tableIndex));
     }
 
-    // sortTable(pProbabilityTable);
-    // filterTable(pProbabilityTable);
+    sortTable(pProbabilityTable);
+    filterTable(pProbabilityTable);
+
+    
 
     
     int cantidad = 0;
