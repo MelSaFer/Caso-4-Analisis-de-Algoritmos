@@ -143,8 +143,6 @@ class Quadrant{
             this->pixelsInQuadrant.erase(pixelsInQuadrant.begin() + pPixelIndex);
         }
 
-        
-
         //---------------------------------------------------
         //to_string
         void toString(){

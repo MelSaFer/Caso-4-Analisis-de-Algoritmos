@@ -1,7 +1,6 @@
 #ifndef _INDIVIDUAL_
 #define _INDIVIDUAL_ 1
 
-//#define CROMO_MAX_VALUE 1 // 
 #define NIBBLE_SIZE 16
 #define MIN_GENOTYPE_SIZE_BY_PARENT 4 // 5
 #include "point.h"
@@ -21,18 +20,12 @@ class individual {
         int size;
         cromodistribution* chromosomaticDistr;
 
-        // point* pointInfo;
-
-        //int XCoordinate;
-        //int YCoordinate;
-        //int color;
-        
-
     public:
         individual(short pValue) {
             this->chromosome = pValue;
         }
 
+        //---------------------------------------------------------------
         individual(short pCromosoma, int pCoordX, int pCoordY, int pShape, int pSize, cromodistribution* chromoDist){
             this->chromosome = pCromosoma;
             this->coordX = pCoordX;
@@ -41,74 +34,81 @@ class individual {
             this->size = pSize;
             this->chromosomaticDistr = chromoDist;
         }
-
+        //---------------------------------------------------------------
         void setCoordX (int pCoordX){
             this->coordX = pCoordX;
         }
 
+        //---------------------------------------------------------------
         int getCoordX (){
             return this->coordX;
         }
 
+        //---------------------------------------------------------------
         void setCoordY (int pCoordY){
             this->coordY = pCoordY;
         }
 
+        //---------------------------------------------------------------
         int getCoordY (){
             return this->coordY;
         }
 
+        //---------------------------------------------------------------
         short getChromosome() {
             return this->chromosome;
         }
 
+        //---------------------------------------------------------------
         void setFitnessValue(float pValue) {
             this->fitnessValue = pValue;
         }
 
+        //---------------------------------------------------------------
         float getFitnessValue() {
             return this->fitnessValue;
         }
 
+        //---------------------------------------------------------------
         void setGray(int pGray){
             this->gray = pGray;
         }
 
+        //---------------------------------------------------------------
         int getGray(){
             return this->gray;
         }
 
+        //---------------------------------------------------------------
         void setSize(int pSize){
             this->size = pSize;
         }
 
+        //---------------------------------------------------------------
         int getSize(){
             return this->size;
         }
 
+        //---------------------------------------------------------------
         void setShape(int pShape){
             this->shape = pShape;
         }
 
+        //---------------------------------------------------------------
         int getShape(){
             return this->shape;
         }
 
+        //---------------------------------------------------------------
         void setChromoDist(cromodistribution* pChromoDist){
             this->chromosomaticDistr = pChromoDist;
         }
 
+        //---------------------------------------------------------------
         cromodistribution* getCromoDist(){
             return this->chromosomaticDistr;
         }
 
-        // void setPointInfo(point* pNewPoint){
-        //     this->pointInfo = pNewPoint;
-        // }
-
-        // point* getPointInfo(){
-        //     return this->pointInfo;
-        // }
 };
 
 
