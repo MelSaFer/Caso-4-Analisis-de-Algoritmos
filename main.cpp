@@ -127,9 +127,9 @@ int main(int argc, char const *argv[])
         float(geneticDistribution.at(i)->probability) << ", minValue: " << geneticDistribution.at(i)->minCromoValue << ", maxValue: " << geneticDistribution.at(i)->maxCromoValue << endl << endl;
     }
 
-    int population = 150;
-    genetic.initPopulation(population, geneticDistribution);
-    genetic.produceGenerations(6, 100, geneticDistribution);
+    int population = 300;
+    genetic.initPopulation(population, geneticDistribution, greyInImage);
+    genetic.produceGenerations(6, 400, geneticDistribution, greyInImage);
 
 
     return 0;
