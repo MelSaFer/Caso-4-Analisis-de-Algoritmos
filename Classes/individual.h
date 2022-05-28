@@ -3,7 +3,7 @@
 
 //#define CROMO_MAX_VALUE 1 // 
 #define NIBBLE_SIZE 16
-#define MIN_GENOTYPE_SIZE_BY_PARENT 2 // 5
+#define MIN_GENOTYPE_SIZE_BY_PARENT 4 // 5
 #include "point.h"
 #include "Quadrant.h"
 #include "cromodistribution.h"
@@ -13,7 +13,7 @@ class individual {
         // any important related info
         // decide the size of your nibble for your problem
         float fitnessValue;
-        unsigned char chromosome;
+        short chromosome;
         int coordX;
         int coordY;
         int gray;
@@ -29,11 +29,11 @@ class individual {
         
 
     public:
-        individual(unsigned char pValue) {
+        individual(short pValue) {
             this->chromosome = pValue;
         }
 
-        individual(unsigned char pCromosoma, int pCoordX, int pCoordY, int pShape, int pSize, cromodistribution* chromoDist){
+        individual(short pCromosoma, int pCoordX, int pCoordY, int pShape, int pSize, cromodistribution* chromoDist){
             this->chromosome = pCromosoma;
             this->coordX = pCoordX;
             this->coordY = pCoordY;
@@ -58,7 +58,7 @@ class individual {
             return this->coordY;
         }
 
-        unsigned char getChromosome() {
+        short getChromosome() {
             return this->chromosome;
         }
 

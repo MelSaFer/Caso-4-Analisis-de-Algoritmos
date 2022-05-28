@@ -110,6 +110,8 @@ int main(int argc, char const *argv[])
 
         if(tableIndex == (probabilityTable.size() - 1)){
             cromoRow->maxCromoValue = 65536 - 1;
+            geneticDistribution.push_back(cromoRow);
+            break;
         }
         else
             cromoRow->maxCromoValue = lastValue;
@@ -118,16 +120,16 @@ int main(int argc, char const *argv[])
 
     } 
 
-    // for (int i = 0; i < geneticDistribution.size(); i ++){
-    //     std :: cout << "Indice: " << i << ", size: " << geneticDistribution.at(i)->size << ", shape: " <<\
-    //     geneticDistribution.at(i)->shape << ", pixeles: " << geneticDistribution.at(i)->quantityOfPixels <<\
-    //     ", TPixeles: " << geneticDistribution.at(i)->totalPopulation << ", probability: " << \
-    //     float(geneticDistribution.at(i)->probability) << ", minValue: " << geneticDistribution.at(i)->minCromoValue << ", maxValue: " << geneticDistribution.at(i)->maxCromoValue << endl << endl;
-    // }
+    for (int i = 0; i < geneticDistribution.size(); i ++){
+        std :: cout << "Indice: " << i << ", size: " << geneticDistribution.at(i)->size << ", shape: " <<\
+        geneticDistribution.at(i)->shape << ", pixeles: " << geneticDistribution.at(i)->quantityOfPixels <<\
+        ", TPixeles: " << geneticDistribution.at(i)->totalPopulation << ", probability: " << \
+        float(geneticDistribution.at(i)->probability) << ", minValue: " << geneticDistribution.at(i)->minCromoValue << ", maxValue: " << geneticDistribution.at(i)->maxCromoValue << endl << endl;
+    }
 
-    int population = 100;
+    int population = 300;
     genetic.initPopulation(population, geneticDistribution);
-    genetic.produceGenerations(1, 40);
+    genetic.produceGenerations(6, 400, geneticDistribution);
 
 
     return 0;

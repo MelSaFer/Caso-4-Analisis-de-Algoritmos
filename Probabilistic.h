@@ -176,7 +176,8 @@ void totalAreaCase (unsigned char* pImageFile, vector<Quadrant*> &pProbabilityTa
     pProbabilityTable.insert(pProbabilityTable.begin(), newQuadrant);
 
     // update the probability of all quadrants
-    updateProbability(pProbabilityTable);
+    // if((pixelsQuantity % 11664) == 0)
+    //     updateProbability(pProbabilityTable);
 }
 
 /*___________________________________________________________________________________________________________
@@ -308,8 +309,14 @@ void otherQuadrantCases (unsigned char* pImageFile, vector<Quadrant*> &pProbabil
     pProbabilityTable.at(indexTable)->addPixel(newQuadrantPixel);
 
     // update the probability of all quadrants
-    if(increase)
-        updateProbability(pProbabilityTable);
+    // if(increase){
+    //     if((pixelsQuantity % 11664) == 0){
+    //         updateProbability(pProbabilityTable);
+    //     }
+    // }
+    // if((pixelsQuantity % 11664) == 0){
+    //     updateProbability(pProbabilityTable);
+    // }
 }
 
 struct GrayColor {
@@ -447,8 +454,8 @@ void probabilisticFunction (unsigned char* pImageFile, vector<Quadrant*> &pProba
         deletePixels(pProbabilityTable.at(tableIndex));
     }
 
-    sortTable(pProbabilityTable);
-    filterTable(pProbabilityTable);
+    // sortTable(pProbabilityTable);
+    // filterTable(pProbabilityTable);
 
     
     int cantidad = 0;

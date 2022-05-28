@@ -8,7 +8,7 @@
 
 int cromoMaxValue = 65535;
 
-#define MAXIMUM_DISTANCE 35
+#define MAXIMUM_DISTANCE 50
 //Sizes
 #define SMALL 2
 #define MEDIUM 6
@@ -180,7 +180,7 @@ class GeneticBase {
                 int maxCoordY = (theIndividual->getCoordY()) + (length);
 
                 int direction = rand() % 2;
-                cout<< "Direccion: " << direction << endl;
+                // cout<< "Direccion: " << direction << endl;
 
                 if(direction == 0){
                     javaSocket.paintLine(10, 10, 10, 255, minCoordX, minCoordY, maxCoordX, maxCoordY);
@@ -214,10 +214,9 @@ class GeneticBase {
             int currentDistribution;
             int coordX;
             int coordY;
-            cout << "AQUIII2-------------------------" <<endl;
 
             for(int i = 0; i < pAmountOfIndividuals; i++) {
-                cout << "Creando individuo " << i << endl;
+                // cout << "Creando individuo " << i << endl;
                 currentDistribution = distr(eng);
                 cromodistribution* selectedCromoDist = new cromodistribution();
                 //cout << currentDistribution << endl;
@@ -229,32 +228,81 @@ class GeneticBase {
                 coordX = distrPointX(eng);
                 coordY = distrPointY(eng);
 
-                individual* newInd = new individual((unsigned char) currentDistribution, coordX, coordY, \
+                individual* newInd = new individual((short)currentDistribution, coordX, coordY, \
                             selectedCromoDist->shape, selectedCromoDist->size, selectedCromoDist);
                 
                 this->population->push_back(newInd);
 
             }
-            cout << "AQUIII-------------------------" <<endl;
             for(int i = 0; i < this->population->size(); i++){
-                cout << "Individuo # " << i << endl;
-                // cout << "Cromo: " << this->population->at(i)->getChromosome() << endl;
-                cout << "X: " << this->population->at(i)->getCoordX() << endl;
-                cout << "Y: " << this->population->at(i)->getCoordY() << endl;
-                cout << "Gray: " << this->population->at(i)->getGray()<< endl;
-                cout << "Shape: " << this->population->at(i)->getShape() << endl;
-                cout << "Size: " << this->population->at(i)->getSize() << endl;
+                // cout << "Individuo # " << i << endl;
+                // // cout << "Cromo: " << this->population->at(i)->getChromosome() << endl;
+                // cout << "X: " << this->population->at(i)->getCoordX() << endl;
+                // cout << "Y: " << this->population->at(i)->getCoordY() << endl;
+                // cout << "Gray: " << this->population->at(i)->getGray()<< endl;
+                // cout << "Shape: " << this->population->at(i)->getShape() << endl;
+                // cout << "Size: " << this->population->at(i)->getSize() << endl;
 
                 paitingInJavaServer(this->population->at(i));
             }
-            javaSocket.closeConnection();
+            // javaSocket.closeConnection();
+        }
+
+        void chromosomesUpdate(vector<cromodistribution*> pGeneticDistribution){
+            //For the random of cromodist
+            random_device rd;
+            default_random_engine eng(rd());
+            uniform_real_distribution<> distr(0, cromoMaxValue); // random range
+            short currentDistribution;
+            int coordX;
+            int coordY;
+
+            for (int familyIndex = 0; familyIndex < population->size(); familyIndex++){
+                // cout << "Actualizando individuos" << endl;
+
+                // currentDistribution = distr(eng);
+                currentDistribution = population->at(familyIndex)->getChromosome();
+                cromodistribution* selectedCromoDist = new cromodistribution();
+
+                //cout << currentDistribution << endl;
+                selectedCromoDist = assignCromosomaticDist(currentDistribution, pGeneticDistribution);
+                //Random of the new point coord
+                uniform_real_distribution<> distrPointX(selectedCromoDist->quadrant->getMinX(), selectedCromoDist->quadrant->getMaxX()); 
+                uniform_real_distribution<> distrPointY(selectedCromoDist->quadrant->getMinY(), selectedCromoDist->quadrant->getMaxY()); 
+
+                coordX = distrPointX(eng);
+                coordY = distrPointY(eng);
+
+                population->at(familyIndex)->setCoordX(coordX);
+                population->at(familyIndex)->setCoordY(coordY);
+                population->at(familyIndex)->setShape(selectedCromoDist->shape);
+                population->at(familyIndex)->setSize(selectedCromoDist->size);
+                population->at(familyIndex)->setChromoDist(selectedCromoDist);
+
+                // individual* newInd = new individual((unsigned char) currentDistribution, coordX, coordY, \
+                //             selectedCromoDist->shape, selectedCromoDist->size, selectedCromoDist);
+            }
+            
+            // this->population->push_back(newInd);
         }
         
-        void produceGenerations(int ptargetGenerations, int pChildrensPerGenerations) {
+        void produceGenerations(int ptargetGenerations, int pChildrensPerGenerations, vector<cromodistribution*> pGeneticDistribution) {
             for(int i=0; i<ptargetGenerations; i++) {
                 evaluateFitness();
                 reproduce(pChildrensPerGenerations);
+                chromosomesUpdate(pGeneticDistribution);
+
+                
+                javaSocket.clear();
+
+                for(int individualIndex = 0; individualIndex < this->population->size(); individualIndex++){
+                    paitingInJavaServer(this->population->at(individualIndex));
+                }
+
+
             }
+
+            javaSocket.closeConnection();
         }
 
         vector<individual*> getPopulation() {
