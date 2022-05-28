@@ -30,7 +30,7 @@ int main(int argc, char const *argv[])
     int width, height, channels;
 
     //Image we are going to use
-    const char* filename = "images/rostro3.jpg";
+    const char* filename = "images/rostro2.jpg";
     unsigned char *image = stbi_load(filename, &width, &height, &channels,0);
 
     //Size of the image
@@ -122,7 +122,7 @@ int main(int argc, char const *argv[])
     // initial population
     int population = 150;
     int targetGenerations = 5;
-    int ChildrensPerGenerations = 500;
+    int ChildrensPerGenerations = 350;
 
     genetic.initPopulation(population, geneticDistribution, greyInImage);
     genetic.produceGenerations(targetGenerations, ChildrensPerGenerations, geneticDistribution, greyInImage);

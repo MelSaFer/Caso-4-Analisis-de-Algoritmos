@@ -11,8 +11,8 @@ int cromoMaxValue = 65536;
 
 //Sizes
 #define SMALL 2
-#define MEDIUM 10
-#define LARGE 20
+#define MEDIUM 9
+#define LARGE 17
 
 using namespace std;
 
@@ -114,6 +114,8 @@ class GeneticBase {
 
             // ------------------------------------------------------------------------------
             //                                  MUTATION
+            //
+            // we want to select a bit and depending on the probability it will be inverted
             // ------------------------------------------------------------------------------
 
             // the kid only has a 7% chance to mutate
@@ -121,11 +123,17 @@ class GeneticBase {
 
                 // a bit is selected to be modified
                 unsigned short bitPosition = rand() % (NIBBLE_SIZE);
-                unsigned short bit = (kid>>bitPosition);
-                bit = (bit & 1)^1;
-                unsigned short clearBit= ~(1<<bitPosition); // shift left a one in bit position
-                unsigned short mask = kid & clearBit; // 
-                kid = mask | (bit<<bitPosition);
+
+                unsigned short bit = (kid>>bitPosition); // bit of the kid shift to the right, until out of range
+
+                bit = (bit & 1)^1; // set all bits to 0
+                
+                // the 1 is put in the change position and all the bits are inverted in order to leave a 0 in the bit
+                unsigned short auxiliarBit = ~(1<<bitPosition); // shift left a one in bit position
+
+                unsigned short mask = kid & auxiliarBit;
+
+                kid = mask | (bit<<bitPosition); // finally the selected bit is inverted
             }
 
             //-----------------------------
@@ -200,7 +208,7 @@ class GeneticBase {
                 int coordX = (theIndividual->getCoordX());
                 int coordY = (theIndividual->getCoordY());
                 //int radius = ((length/2)*size)/2;
-                javaSocket.paintDot(grey, grey, grey, 200, coordX,coordY, size);
+                javaSocket.paintDot(grey, grey, grey, 200, coordX,coordY, (size*2));
             }
             
 
@@ -213,7 +221,7 @@ class GeneticBase {
             //For the random of cromodist
             random_device rd;
             default_random_engine eng(rd());
-            uniform_real_distribution<> distr(0, cromoMaxValue + 1); // random range
+            uniform_real_distribution<> distr(0, cromoMaxValue); // random range
 
             javaSocket.init();
             javaSocket.clear();

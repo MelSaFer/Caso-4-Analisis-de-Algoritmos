@@ -400,7 +400,7 @@ void probabilisticFunction (unsigned char* pImageFile, vector<Quadrant*> &pProba
     
     float randomNumber;
 
-    for(int i = 0; i < 233280; i++){ // while loop while 25% has not been sampled
+    for(int i = 0; i < 349920; i++){ // while loop while 25% has not been sampled
         randomNumber = distr(eng);
 
         int size = pProbabilityTable.size();
